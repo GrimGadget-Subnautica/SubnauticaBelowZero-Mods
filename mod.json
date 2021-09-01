@@ -1,0 +1,17 @@
+{
+  //"NexusId": "",
+  "Game": "BelowZero",
+  "Id": "",
+  "AssemblyName": "",
+  "DisplayName": "",
+  "Version": "",
+  "Author": "Grimolfr",
+  "Dependencies": [
+    "SMLHelper"
+  ],
+  "VersionDependencies": {
+     "SMLHelper": "2.12.0.0"
+  },
+  "LoadAfter": [],
+  "Enable": "false"
+}
