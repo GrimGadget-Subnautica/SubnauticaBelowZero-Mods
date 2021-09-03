@@ -16,16 +16,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		Configurations.targets = Configurations.targets
 		Directory.Build.props = Directory.Build.props
+		GameDir.targets = GameDir.targets
 		Grimware.Subnautica.BelowZero.Mods.TestMod.sln.DotSettings = Grimware.Subnautica.BelowZero.Mods.TestMod.sln.DotSettings
 		LICENSE = LICENSE
 		mod.json = mod.json
 		nuget.config = nuget.config
+		PostBuildEvents.targets = PostBuildEvents.targets
 		README.md = README.md
 		References.targets = References.targets
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grimolfr.SubnauticaZero.TestMod", "src\Grimolfr.SubnauticaZero.TestMod\Grimolfr.SubnauticaZero.TestMod.csproj", "{CB82D9E7-2AF4-43A9-B4C2-AAF1BAC30441}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grimolfr.SubnauticaZero.ExteriorPlantPots", "src\Grimolfr.SubnauticaZero.ExteriorPlantPots\Grimolfr.SubnauticaZero.ExteriorPlantPots.csproj", "{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,16 +36,16 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CB82D9E7-2AF4-43A9-B4C2-AAF1BAC30441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB82D9E7-2AF4-43A9-B4C2-AAF1BAC30441}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB82D9E7-2AF4-43A9-B4C2-AAF1BAC30441}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB82D9E7-2AF4-43A9-B4C2-AAF1BAC30441}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{CB82D9E7-2AF4-43A9-B4C2-AAF1BAC30441} = {0AFB6860-6622-482C-93E5-8B2032B44F96}
+		{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42} = {0AFB6860-6622-482C-93E5-8B2032B44F96}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6D17218-7E6A-400C-A983-5BA2DD49AE00}
