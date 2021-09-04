@@ -59,12 +59,11 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
             if (prefab == null) return null;
 
             Logger.Log(Logger.Level.Debug, $"Creating new instance of {TechType}");
-            var pot = Object.Instantiate(prefab);
+            var instance = Object.Instantiate(prefab);
 
             Logger.Log(Logger.Level.Debug, "Setting Constructable properties...");
-            var constructable = pot.GetComponent<Constructable>();
+            var constructable = instance.GetComponent<Constructable>();
             constructable.techType = TechType;
-
             constructable.allowedInBase = false;
             constructable.allowedInSub = false;
             constructable.allowedOnCeiling = false;
@@ -72,30 +71,31 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
             constructable.allowedOutside = true;
             constructable.allowedOnGround = true;
             constructable.allowedOnConstructables = true;
-
             constructable.forceUpright = true;
-            constructable.controlModelState = true;
             constructable.rotationEnabled = true;
 
             Logger.Log(Logger.Level.Debug, "Setting Planter properties...");
-            var planter = pot.GetComponent<Planter>();
+            var planter = instance.GetComponent<Planter>();
             planter.isIndoor = false;
             planter.environment = Planter.PlantEnvironment.Dynamic;
 
             Logger.Log(Logger.Level.Debug, "Setting TechTag properties...");
-            pot.GetComponent<TechTag>().type = TechType;
+            instance.GetComponent<TechTag>().type = TechType;
 
             Logger.Log(Logger.Level.Debug, "Setting PrefabIdentifier properties...");
-            pot.GetComponent<PrefabIdentifier>().ClassId = ClassID;
+            instance.GetComponent<PrefabIdentifier>().ClassId = ClassID;
 
-            foreach (var renderer in pot.GetComponentsInChildren<Renderer>(true) ?? Array.Empty<Renderer>())
+            foreach (var renderer in instance.GetComponentsInChildren<Renderer>(true) ?? Array.Empty<Renderer>())
             {
                 foreach (var material in renderer?.materials ?? Array.Empty<Material>())
                     if (material != null)
                         material.color = ColorTint;
             }
 
-            return pot;
+            var largeWorldEntity = instance.AddComponent<LargeWorldEntity>();
+            largeWorldEntity.cellLevel = LargeWorldEntity.CellLevel.Global;
+
+            return instance;
         }
     }
 }
