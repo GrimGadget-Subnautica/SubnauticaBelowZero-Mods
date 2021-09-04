@@ -2,7 +2,7 @@
   //"NexusId": "",
   "Id": "Grimolfr_ExteriorPlantPots",
   "DisplayName": "Exterior Plant Pots BZ",
-  "Version": "1.0.0-preview-1.4",
+  "Version": "1.0.0",
 
   "Game": "BelowZero",
   "AssemblyName": "Grimolfr.SubnauticaZero.ExteriorPlantPots.dll",
