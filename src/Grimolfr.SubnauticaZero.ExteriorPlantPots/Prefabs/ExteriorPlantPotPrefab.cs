@@ -93,7 +93,7 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
             }
 
             var largeWorldEntity = instance.AddComponent<LargeWorldEntity>();
-            largeWorldEntity.cellLevel = LargeWorldEntity.CellLevel.Global;
+            largeWorldEntity.cellLevel = LargeWorldEntity.CellLevel.Medium;
 
             return instance;
         }
