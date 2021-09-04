@@ -32,6 +32,8 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
 
         public override TechGroup GroupForPDA => TechGroup.ExteriorModules;
 
+        public override string IconFileName => $"{ClassID}.png";
+
         public override TechType RequiredForUnlock => TechType.FarmingTray;
 
         private protected virtual TechType BaseTechType => TechType.PlanterPot;
