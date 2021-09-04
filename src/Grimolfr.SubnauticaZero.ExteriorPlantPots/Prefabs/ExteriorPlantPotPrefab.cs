@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using JetBrains.Annotations;
 using SMLHelper.V2.Assets;
 using SMLHelper.V2.Crafting;
 using UnityEngine;
@@ -27,6 +26,8 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
         {
         }
 
+        public virtual Color ColorTint => Main.Config?.CustomTint ?? new Color(1.0f, 1.0f, 1.0f);
+
         public override TechCategory CategoryForPDA => TechCategory.ExteriorModule;
 
         public override TechGroup GroupForPDA => TechGroup.ExteriorModules;
@@ -39,7 +40,7 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
         {
             var original = Resources.Load<GameObject>($"Submarine/Build/{BaseTechType}");
 
-            return PreprocessPrefab(Object.Instantiate(original));
+            return CreateInstanceFrom(Object.Instantiate(original));
         }
 
         public override IEnumerator GetGameObjectAsync(IOut<GameObject> gameObject)
@@ -48,43 +49,53 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
 
             yield return CraftData.GetPrefabForTechTypeAsync(BaseTechType, false, taskResult);
 
-            gameObject?.Set(PreprocessPrefab(Object.Instantiate(taskResult.Get())));
+            gameObject?.Set(CreateInstanceFrom(Object.Instantiate(taskResult.Get())));
         }
 
         protected override RecipeData GetBlueprintRecipe() => new RecipeData(new Ingredient(TechType.Titanium, 2)) {craftAmount = 1};
 
-        private protected GameObject PreprocessPrefab(GameObject prefab)
+        private GameObject CreateInstanceFrom(GameObject prefab)
         {
             if (prefab == null) return null;
 
-            Logger.Log(Logger.Level.Debug, $"Setting Planter object properties...");
-            var planter = prefab.GetComponent<Planter>();
-            planter.isIndoor = false;
-            planter.environment = Planter.PlantEnvironment.Dynamic;
+            Logger.Log(Logger.Level.Debug, $"Creating new instance of {TechType}");
+            var pot = Object.Instantiate(prefab);
 
-            Logger.Log(Logger.Level.Debug, $"Setting Constructable object properties...");
-            var constructable = planter.GetComponent<Constructable>();
+            Logger.Log(Logger.Level.Debug, "Setting Constructable properties...");
+            var constructable = pot.GetComponent<Constructable>();
             constructable.techType = TechType;
 
             constructable.allowedInBase = false;
             constructable.allowedInSub = false;
-            constructable.allowedOutside = true;
             constructable.allowedOnCeiling = false;
-            constructable.allowedOnGround = true;
             constructable.allowedOnWall = false;
-            constructable.allowedOnConstructables = false;
+            constructable.allowedOutside = true;
+            constructable.allowedOnGround = true;
+            constructable.allowedOnConstructables = true;
 
             constructable.forceUpright = true;
             constructable.controlModelState = true;
             constructable.rotationEnabled = true;
 
-            Logger.Log(Logger.Level.Debug, $"Setting TechTag object properties...");
-            planter.GetComponent<TechTag>().type = TechType;
+            Logger.Log(Logger.Level.Debug, "Setting Planter properties...");
+            var planter = pot.GetComponent<Planter>();
+            planter.isIndoor = false;
+            planter.environment = Planter.PlantEnvironment.Dynamic;
 
-            Logger.Log(Logger.Level.Debug, $"Setting PrefabIdentifier object properties...");
-            planter.GetComponent<PrefabIdentifier>().ClassId = ClassID;
+            Logger.Log(Logger.Level.Debug, "Setting TechTag properties...");
+            pot.GetComponent<TechTag>().type = TechType;
 
-            return prefab;
+            Logger.Log(Logger.Level.Debug, "Setting PrefabIdentifier properties...");
+            pot.GetComponent<PrefabIdentifier>().ClassId = ClassID;
+
+            foreach (var renderer in pot.GetComponentsInChildren<Renderer>(true) ?? Array.Empty<Renderer>())
+            {
+                foreach (var material in renderer?.materials ?? Array.Empty<Material>())
+                    if (material != null)
+                        material.color = ColorTint;
+            }
+
+            return pot;
         }
     }
 }

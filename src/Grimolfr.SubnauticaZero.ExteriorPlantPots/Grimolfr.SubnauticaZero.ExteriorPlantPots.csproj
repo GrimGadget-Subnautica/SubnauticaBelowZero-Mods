@@ -11,13 +11,13 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.0-preview-1.0</Version>
+    <Version>1.0.0-preview-1.4</Version>
     <Description>
       <![CDATA[
 
 1.0.0
   * Initial Version
-  * Initialize Exterior prefab versions of each of the 3 interior planer pots from the core game.
+  * Initialize Exterior versions of each of the 3 interior planter pots from the core game.
 
 ]]]]>
     </Description>
