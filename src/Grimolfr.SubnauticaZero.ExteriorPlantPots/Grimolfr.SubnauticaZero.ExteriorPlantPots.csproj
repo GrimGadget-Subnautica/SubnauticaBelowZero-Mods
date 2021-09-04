@@ -75,22 +75,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\ExteriorPlantPot.png">
+    <None Update="Assets\ExteriorPlanterPot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\ExteriorPlantPot2.png">
+    <None Update="Assets\ExteriorPlanterPot2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\ExteriorPlantPot3.png">
+    <None Update="Assets\ExteriorPlanterPot3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="mod.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Assets\" />
   </ItemGroup>
 
 </Project>
