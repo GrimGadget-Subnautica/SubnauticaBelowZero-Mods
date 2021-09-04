@@ -1,44 +1,28 @@
-﻿using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 using Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs;
 using HarmonyLib;
 using QModManager.API.ModLoading;
-using SMLHelper.V2.Handlers;
+using QModManager.Utility;
 
 namespace Grimolfr.SubnauticaZero.ExteriorPlantPots
 {
     [QModCore]
     public static class Main
     {
-        internal static ExteriorPlantPotConfiguration Config { get; private set; }
-
         [QModPatch]
         public static void Initialize()
         {
-            Config = OptionsPanelHandler.Main.RegisterModOptions<ExteriorPlantPotConfiguration>();
-
-            if (!File.Exists(Config.JsonFilePath))
-                Config.Save();
-
+            Logger.Log(Logger.Level.Info, "Patching in Exterior Plant Pot prefabs...");
             new ExteriorPlantPotPrefab().Patch();
+            new ExteriorPlantPot2Prefab().Patch();
+            new ExteriorPlantPot3Prefab().Patch();
 
             var assembly = Assembly.GetExecutingAssembly();
-            var harmony = new Harmony($"Grimolfr_{assembly.GetName().Name}");
-            harmony.PatchAll(assembly);
+            var assemblyName = assembly.GetName().Name;
 
-            /*
-             * ExteriorPlanterPot2ClassId,
-             * "Composite Exterior Plant Pot",
-             * "Designer plant pot, suitable for use on land or underwater.",
-             * "Submarine/Build/PlanterPot2",
-             * TechType.PlanterPot2
-             *
-             * ExteriorPlanterPot3ClassId,
-             * "Chic Exterior Plant Pot",
-             * "Upmarket plant pot, suitable for use on land or underwater.",
-             * "Submarine/Build/PlanterPot3",
-             * TechType.PlanterPot3
-            */
+            Logger.Log(Logger.Level.Info, $"Processing all pre/post patches for {assemblyName}...");
+            var harmony = new Harmony($"Grimolfr_{assemblyName}");
+            harmony.PatchAll(assembly);
         }
     }
 }

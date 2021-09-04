@@ -1,7 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using JetBrains.Annotations;
 using SMLHelper.V2.Assets;
 using SMLHelper.V2.Crafting;
 using UnityEngine;
+using Logger = QModManager.Utility.Logger;
+using Object = UnityEngine.Object;
 
 namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
 {
@@ -23,8 +27,6 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
         {
         }
 
-        public virtual Color ColorTint => Main.Config?.CustomTint ?? new Color(0.5f, 1.0f, 0, 83f);
-
         public override TechCategory CategoryForPDA => TechCategory.ExteriorModule;
 
         public override TechGroup GroupForPDA => TechGroup.ExteriorModules;
@@ -37,7 +39,7 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
         {
             var original = Resources.Load<GameObject>($"Submarine/Build/{BaseTechType}");
 
-            return PreProcessPrefab(Object.Instantiate(original));
+            return PreprocessPrefab(Object.Instantiate(original));
         }
 
         public override IEnumerator GetGameObjectAsync(IOut<GameObject> gameObject)
@@ -46,16 +48,22 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
 
             yield return CraftData.GetPrefabForTechTypeAsync(BaseTechType, false, taskResult);
 
-            gameObject?.Set(PreProcessPrefab(Object.Instantiate(taskResult.Get())));
+            gameObject?.Set(PreprocessPrefab(Object.Instantiate(taskResult.Get())));
         }
 
         protected override RecipeData GetBlueprintRecipe() => new RecipeData(new Ingredient(TechType.Titanium, 2)) {craftAmount = 1};
 
-        private protected GameObject PreProcessPrefab(GameObject prefab)
+        private protected GameObject PreprocessPrefab(GameObject prefab)
         {
-            var pot = prefab.GetComponent<Planter>();
+            if (prefab == null) return null;
 
-            var constructable = pot.GetComponent<Constructable>();
+            Logger.Log(Logger.Level.Debug, $"Setting Planter object properties...");
+            var planter = prefab.GetComponent<Planter>();
+            planter.isIndoor = false;
+            planter.environment = Planter.PlantEnvironment.Dynamic;
+
+            Logger.Log(Logger.Level.Debug, $"Setting Constructable object properties...");
+            var constructable = planter.GetComponent<Constructable>();
             constructable.techType = TechType;
 
             constructable.allowedInBase = false;
@@ -70,17 +78,11 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
             constructable.controlModelState = true;
             constructable.rotationEnabled = true;
 
-            var planter = pot.GetComponent<Planter>();
-            planter.isIndoor = false;
-            planter.environment = Planter.PlantEnvironment.Dynamic;
+            Logger.Log(Logger.Level.Debug, $"Setting TechTag object properties...");
+            planter.GetComponent<TechTag>().type = TechType;
 
-            var techTag = pot.GetComponent<TechTag>();
-            techTag.type = TechType;
-
-            var identifier = pot.GetComponent<PrefabIdentifier>();
-            identifier.ClassId = ClassID;
-
-            prefab.GetComponentInChildren<SkinnedMeshRenderer>(true).material.color = ColorTint;
+            Logger.Log(Logger.Level.Debug, $"Setting PrefabIdentifier object properties...");
+            planter.GetComponent<PrefabIdentifier>().ClassId = ClassID;
 
             return prefab;
         }
