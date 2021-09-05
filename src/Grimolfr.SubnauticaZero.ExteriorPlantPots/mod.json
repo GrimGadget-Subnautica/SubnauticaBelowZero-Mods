@@ -1,5 +1,5 @@
 {
-  //"NexusId": "",
+  "NexusId": { "BelowZero": "238" },
   "Id": "Grimolfr_ExteriorPlantPots",
   "DisplayName": "Exterior Plant Pots BZ",
   "Version": "1.0.0",
