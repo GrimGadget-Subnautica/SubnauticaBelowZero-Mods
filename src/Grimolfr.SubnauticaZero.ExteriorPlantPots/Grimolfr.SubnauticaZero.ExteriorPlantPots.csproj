@@ -75,15 +75,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\ExteriorPlanterPot.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\ExteriorPlanterPot2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\ExteriorPlanterPot3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="mod.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

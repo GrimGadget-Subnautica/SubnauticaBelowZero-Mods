@@ -11,13 +11,13 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots
     [QModCore]
     public static class Main
     {
-        internal static ExteriorPlantPotConfiguration Config { get; private set; }
+        internal static ExteriorPlantPotsConfiguration Config { get; private set; }
 
         [QModPatch]
         public static void Initialize()
         {
             Logger.Log(Logger.Level.Info, "Registering Exterior Plant Pots configuration...");
-            Config = OptionsPanelHandler.Main.RegisterModOptions<ExteriorPlantPotConfiguration>();
+            Config = OptionsPanelHandler.Main.RegisterModOptions<ExteriorPlantPotsConfiguration>();
             if (!File.Exists(Config.JsonFilePath))
                 Config.Save();
 

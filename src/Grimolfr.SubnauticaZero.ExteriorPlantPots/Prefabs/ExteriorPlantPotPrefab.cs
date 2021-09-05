@@ -26,7 +26,7 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
         {
         }
 
-        public virtual Color ColorTint => Main.Config?.CustomTint ?? new Color(1.0f, 1.0f, 1.0f);
+        public virtual Color MaterialColor => Color.white;
 
         public override TechCategory CategoryForPDA => TechCategory.ExteriorModule;
 
@@ -34,7 +34,7 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
 
         public override string IconFileName => $"{ClassID}.png";
 
-        public override TechType RequiredForUnlock => TechType.FarmingTray;
+        public override TechType RequiredForUnlock => Main.Config.RequireExteriorGrowbed ? TechType.FarmingTray : BaseTechType;
 
         private protected virtual TechType BaseTechType => TechType.PlanterPot;
 
@@ -56,6 +56,11 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
 
         protected override RecipeData GetBlueprintRecipe() => new RecipeData(new Ingredient(TechType.Titanium, 2)) {craftAmount = 1};
 
+        protected override Sprite GetItemSprite()
+        {
+            return SpriteManager.Get(BaseTechType);
+        }
+
         private GameObject CreateInstanceFrom(GameObject prefab)
         {
             if (prefab == null) return null;
@@ -72,7 +77,7 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
             constructable.allowedOnWall = false;
             constructable.allowedOutside = true;
             constructable.allowedOnGround = true;
-            constructable.allowedOnConstructables = true;
+            constructable.allowedOnConstructables = false;
             constructable.forceUpright = true;
             constructable.rotationEnabled = true;
 
@@ -91,7 +96,7 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
             {
                 foreach (var material in renderer?.materials ?? Array.Empty<Material>())
                     if (material != null)
-                        material.color = ColorTint;
+                        material.color = MaterialColor;
             }
 
             var largeWorldEntity = instance.AddComponent<LargeWorldEntity>();
