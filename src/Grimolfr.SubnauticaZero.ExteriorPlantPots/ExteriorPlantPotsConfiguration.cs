@@ -12,6 +12,6 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots
             Tooltip = "If checked, exterior pots become available along with the exterior growbed.  "
                 + "Otherwise they become available along with their base counterparts.",
             Order = 100)]
-        public bool RequireExteriorGrowbed = true;
+        public bool RequireExteriorGrowbed = false;
     }
 }
