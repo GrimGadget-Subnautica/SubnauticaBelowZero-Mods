@@ -3,10 +3,16 @@ using SMLHelper.V2.Options.Attributes;
 
 namespace Grimolfr.SubnauticaZero.ExteriorPlantPots
 {
-    [Menu("Exterior Plant Pots", LoadOn = MenuAttribute.LoadEvents.MenuOpened, SaveOn = MenuAttribute.SaveEvents.ChangeValue)]
-    internal class ExteriorPlantPotsConfiguration
+    [Menu("Exterior Plant Pots",
+        MemberProcessing = MenuAttribute.Members.Explicit,
+        LoadOn = MenuAttribute.LoadEvents.MenuOpened,
+        SaveOn = MenuAttribute.SaveEvents.ChangeValue)]
+    internal class Configuration
         : ConfigFile
     {
+        [Toggle(Label = "Enable", Tooltip = "Check to enable this mod.", Order = 0)]
+        public bool IsEnabled = true;
+
         [Toggle(
             Label = "Require Exterior Growbed",
             Tooltip = "If checked, exterior pots become available along with the exterior growbed.  "

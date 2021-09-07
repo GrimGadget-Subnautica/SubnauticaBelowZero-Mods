@@ -3,7 +3,6 @@ using System.Collections;
 using SMLHelper.V2.Assets;
 using SMLHelper.V2.Crafting;
 using UnityEngine;
-using Logger = QModManager.Utility.Logger;
 using Object = UnityEngine.Object;
 
 namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
@@ -65,10 +64,10 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
         {
             if (prefab == null) return null;
 
-            Logger.Log(Logger.Level.Debug, $"Creating new instance of {TechType}");
+            Log.Debug($"Creating new instance of {TechType}");
             var instance = Object.Instantiate(prefab);
 
-            Logger.Log(Logger.Level.Debug, "Setting Constructable properties...");
+            Log.Debug("Setting Constructable properties...");
             var constructable = instance.GetComponent<Constructable>();
             constructable.techType = TechType;
             constructable.allowedInBase = false;
@@ -81,15 +80,15 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
             constructable.forceUpright = true;
             constructable.rotationEnabled = true;
 
-            Logger.Log(Logger.Level.Debug, "Setting Planter properties...");
+            Log.Debug("Setting Planter properties...");
             var planter = instance.GetComponent<Planter>();
             planter.isIndoor = false;
             planter.environment = Planter.PlantEnvironment.Dynamic;
 
-            Logger.Log(Logger.Level.Debug, "Setting TechTag properties...");
+            Log.Debug("Setting TechTag properties...");
             instance.GetComponent<TechTag>().type = TechType;
 
-            Logger.Log(Logger.Level.Debug, "Setting PrefabIdentifier properties...");
+            Log.Debug("Setting PrefabIdentifier properties...");
             instance.GetComponent<PrefabIdentifier>().ClassId = ClassID;
 
             foreach (var renderer in instance.GetComponentsInChildren<Renderer>(true) ?? Array.Empty<Renderer>())

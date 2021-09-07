@@ -80,4 +80,6 @@
     </None>
   </ItemGroup>
 
+  <Import Project="..\shared\Grimolfr.SubnauticaZero.Shared\Grimolfr.SubnauticaZero.Shared.projitems" Label="Shared" />
+
 </Project>
