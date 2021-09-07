@@ -1,0 +1,18 @@
+{
+  "NexusId": { "BelowZero": "" },
+  "Id": "Grimolfr_ScannerSalvage",
+  "DisplayName": "Scanner Salvage BZ",
+  "Version": "1.0.0-preview-1.0",
+
+  "Game": "BelowZero",
+  "AssemblyName": "Grimolfr.SubnauticaZero.ScannerSalvage.dll",
+  "Author": "Grimolfr",
+  "Dependencies": [
+    "SMLHelper"
+  ],
+  "VersionDependencies": {
+    "SMLHelper": "2.9"
+  },
+  "LoadAfter": [],
+  "Enable": "true"
+}

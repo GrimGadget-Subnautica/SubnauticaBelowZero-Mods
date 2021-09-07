@@ -1,0 +1,88 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ProjectGuid>{E378F1EF-8041-466E-A839-275E21F2EE08}</ProjectGuid>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>1.0.0-preview-1.0</Version>
+    <Description>
+      <![CDATA[
+
+1.0.0
+  * Initial Version
+
+]]]]>
+    </Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Grimolfr</Authors>
+    <Company>Grimware, LLC</Company>
+    <Copyright>Copyright © 2021</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/GrimGadget-Subnautica/SubnauticaBelowZero-Mods</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/GrimGadget-Subnautica/SubnauticaBelowZero-Mods</RepositoryUrl>
+    <PackageTags>Subnautica, Below Zero, Scanner, Salvage</PackageTags>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\dependencies\SubnauticaZero\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\dependencies\SubnauticaZero\SubnauticaZero_Data\Managed\publicized_assemblies\Assembly-CSharp_publicized.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\dependencies\SubnauticaZero\SubnauticaZero_Data\Managed\publicized_assemblies\Assembly-CSharp-firstpass_publicized.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="QModInstaller">
+      <HintPath>..\..\..\dependencies\SubnauticaZero\BepInEx\plugins\QModManager\QModInstaller.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SMLHelper">
+      <HintPath>..\..\..\dependencies\SubnauticaZero\QMods\SMLHelper_BZ\SMLHelper.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\dependencies\SubnauticaZero\SubnauticaZero_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\dependencies\SubnauticaZero\SubnauticaZero_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="mod.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Patches\" />
+  </ItemGroup>
+
+  <Import Project="..\shared\Grimolfr.SubnauticaZero.Shared\Grimolfr.SubnauticaZero.Shared.projitems" Label="Shared" />
+
+</Project>
