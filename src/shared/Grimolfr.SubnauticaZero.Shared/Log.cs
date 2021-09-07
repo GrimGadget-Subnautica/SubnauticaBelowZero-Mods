@@ -8,26 +8,26 @@ namespace Grimolfr.SubnauticaZero
     {
         // Debug
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Debug(string message)
+        public static void Debug(string message, bool showOnScreen = false)
         {
             if (message != null && Logger.DebugLogsEnabled)
-                Logger.Log(Logger.Level.Debug, message);
+                Logger.Log(Logger.Level.Debug, message, showOnScreen: showOnScreen);
         }
 
         // Information
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Info(string message)
+        public static void Info(string message, bool showOnScreen = false)
         {
             if (message != null)
-                Logger.Log(Logger.Level.Info, message);
+                Logger.Log(Logger.Level.Info, message, showOnScreen: showOnScreen);
         }
 
         // Warning
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Warn(string message)
+        public static void Warn(string message, bool showOnScreen = false)
         {
             if (message != null)
-                Logger.Log(Logger.Level.Warn, message);
+                Logger.Log(Logger.Level.Warn, message, showOnScreen: showOnScreen);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
