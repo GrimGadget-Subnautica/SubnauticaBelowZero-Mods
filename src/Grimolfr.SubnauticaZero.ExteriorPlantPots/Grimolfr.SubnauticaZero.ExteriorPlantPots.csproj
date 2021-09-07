@@ -11,13 +11,12 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.1</Version>
+    <Version>1.0.1.1</Version>
     <Description>
       <![CDATA[
 
-1.0.0
-  * Initial Version
-  * Initialize Exterior versions of each of the 3 interior planter pots from the core game.
+1.0.1.1
+  * Cleaned up and streamlined some code.  No change in game mechanics
 
 ]]]]>
     </Description>

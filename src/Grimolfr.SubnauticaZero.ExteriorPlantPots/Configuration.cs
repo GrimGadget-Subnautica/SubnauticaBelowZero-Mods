@@ -3,7 +3,7 @@ using SMLHelper.V2.Options.Attributes;
 
 namespace Grimolfr.SubnauticaZero.ExteriorPlantPots
 {
-    [Menu("Exterior Plant Pots",
+    [Menu(Main.ModName,
         MemberProcessing = MenuAttribute.Members.Explicit,
         LoadOn = MenuAttribute.LoadEvents.MenuOpened,
         SaveOn = MenuAttribute.SaveEvents.ChangeValue)]

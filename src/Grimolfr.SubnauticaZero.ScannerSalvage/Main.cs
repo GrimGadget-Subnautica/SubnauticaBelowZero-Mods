@@ -16,17 +16,22 @@ namespace Grimolfr.SubnauticaZero.ScannerSalvage
         [QModPatch]
         public static void Initialize()
         {
-            Log.Info("Registering Scanner Salvage configuration...");
+            Log.Info($"Registering {ModName} configuration...");
             Config = OptionsPanelHandler.Main.RegisterModOptions<Configuration>();
             if (!File.Exists(Config.JsonFilePath))
                 Config.Save();
 
-            var assembly = Assembly.GetExecutingAssembly();
-            var assemblyName = assembly.GetName().Name;
+            if (Config.IsEnabled)
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                var assemblyName = assembly.GetName().Name;
 
-            Log.Info($"Processing patches for {assemblyName}...");
-            var harmony = new Harmony($"Grimolfr_{assemblyName}");
-            harmony.PatchAll(assembly);
+                Log.Info($"Processing patches for {assemblyName}...");
+                var harmony = new Harmony($"Grimolfr_{assemblyName}");
+                harmony.PatchAll(assembly);
+            }
+            else
+                Log.Debug($"'{ModName}' is disabled.");
         }
     }
 }
