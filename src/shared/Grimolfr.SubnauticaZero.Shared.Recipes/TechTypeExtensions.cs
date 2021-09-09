@@ -7,10 +7,14 @@ namespace Grimolfr.SubnauticaZero
     {
         public static RecipeData GetRecipe(this TechType techType)
         {
-            var entryData = PDAScanner.GetEntryData(techType);
-            if (entryData == null) return null;
+            return ((TechType?)techType).GetRecipe();
+        }
 
-            return CraftDataHandler.GetRecipeData(entryData.blueprint);
+        public static RecipeData GetRecipe(this TechType? techType)
+        {
+            return
+                CraftDataHandler.GetRecipeData(techType ?? default)
+                ?? CraftDataHandler.GetRecipeData(PDAScanner.GetEntryData(techType ?? default).blueprint);
         }
     }
 }

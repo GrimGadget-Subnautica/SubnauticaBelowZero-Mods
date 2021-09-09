@@ -9,6 +9,7 @@
     <Import_RootNamespace>Grimolfr.SubnauticaZero</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)JsonConverters\TechTypeLoggingConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Material.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MaterialsList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TechTypeExtensions.cs" />

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SMLHelper.V2.Crafting;
 
 namespace Grimolfr.SubnauticaZero
 {
-    public class MaterialsList
+    internal class MaterialsList
         : IList<Material>
     {
         private readonly List<Material> _list;
@@ -31,7 +32,10 @@ namespace Grimolfr.SubnauticaZero
 
         public MaterialsList(RecipeData recipe)
         {
-            if (recipe == null) throw new ArgumentNullException(nameof(recipe));
+            _list = new List<Material>(recipe?.ingredientCount ?? 0);
+
+            if (recipe != null)
+                _list.AddRange(recipe.Ingredients.Select(i => new Material(i)));
         }
 
         public int Count => _list.Count;

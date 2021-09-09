@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
+using Grimolfr.SubnauticaZero.JsonConverters;
 using HarmonyLib;
 using QModManager.API.ModLoading;
 using SMLHelper.V2.Handlers;
@@ -12,6 +13,11 @@ namespace Grimolfr.SubnauticaZero.ScannerSalvage
         internal const string ModName = "Scanner Salvage";
 
         internal static Configuration Config { get; private set; }
+
+        static Main()
+        {
+            Log.LoggingJsonSerializer.Converters.Add(new TechTypeLoggingConverter());
+        }
 
         [QModPatch]
         public static void Initialize()

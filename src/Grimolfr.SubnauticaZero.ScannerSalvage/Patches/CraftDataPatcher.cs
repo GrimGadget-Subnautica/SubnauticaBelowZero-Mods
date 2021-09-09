@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
-using SMLHelper.V2.Crafting;
-using SMLHelper.V2.Handlers;
 
 namespace Grimolfr.SubnauticaZero.ScannerSalvage.Patches
 {
@@ -21,24 +18,22 @@ namespace Grimolfr.SubnauticaZero.ScannerSalvage.Patches
         {
             Log.Debug($"{MethodBase.GetCurrentMethod().Name}::{techType} ({num})");
 
-            if (techType == TechType.Titanium && num == 2 && !noMessage && spawnIfCantAdd)
+            if (BlueprintHandTargetPatcher.DataBoxTechType != null)
             {
-                if (BlueprintHandTargetPatcher.DataBoxTechType != null)
-                {
-                    // Got a blueprint chip from a data box
-                    Log.Debug($"Retrieved {BlueprintHandTargetPatcher.DataBoxTechType!.Value} blueprint data chip from a data box.");
-                }
-                else
-                {
-                    // Scanned a fragment
-                    var scanned = PDAScanner.scanTarget.techType;
+                // Got a blueprint chip from a data box
+                Log.Debug($"Retrieved {BlueprintHandTargetPatcher.DataBoxTechType!.Value} blueprint data chip from a data box.");
+            }
+            else if (techType == TechType.Titanium && num == 2 && !noMessage && spawnIfCantAdd)
+            {
+                // Scanned a fragment
+                var scanned = PDAScanner.scanTarget.techType;
+                Log.Debug($"Scanned {scanned}.");
 
-                    Log.Debug($"Scanned {scanned}.");
+                var recipe = scanned.GetRecipe();
+                Log.Debug($"Using recipe: {Environment.NewLine}{JObject.FromObject(recipe).SerializeForLog()}");
 
-                    var recipe = scanned.GetRecipe();
-
-                    Log.Debug($"Using recipe: {Environment.NewLine}{JObject.FromObject(recipe).SerializeForLog()}");
-                }
+                var materials = new MaterialsList(recipe);
+                Log.Debug($"Recipe materials: {Environment.NewLine}{JArray.FromObject(materials).SerializeForLog()}");
             }
 
             return true;
@@ -48,7 +43,7 @@ namespace Grimolfr.SubnauticaZero.ScannerSalvage.Patches
         [HarmonyPostfix]
         public static void PostAddToInventory()
         {
-            Log.Debug(MethodBase.GetCurrentMethod().Name);
+            Log.Debug($"{MethodBase.GetCurrentMethod().Name}");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -20,7 +21,22 @@ namespace Grimolfr.SubnauticaZero
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             };
 
-        internal static JsonSerializer LoggingJsonSerializer => CreateLoggingJsonSerializer();
+        internal static JsonSerializer LoggingJsonSerializer { get; } = CreateLoggingJsonSerializer();
+
+        public static string SerializeForLog(this JArray jArray)
+        {
+            const int stringBuilderInitialCapacity = 1024 * 16;
+
+            if (jArray == null) return null;
+
+            var sb = new StringBuilder(stringBuilderInitialCapacity);
+            using var writer = new StringWriter(sb);
+
+            LoggingJsonSerializer.Serialize(writer, jArray);
+
+            return sb.ToString();
+
+        }
 
         public static string SerializeForLog(this JObject jObject)
         {
@@ -44,10 +60,22 @@ namespace Grimolfr.SubnauticaZero
                 Logger.Log(Logger.Level.Debug, message, showOnScreen: showOnScreen);
         }
 
+        public static void Debug(JArray jArray, bool showOnScreen = false)
+        {
+            if (jArray != null && Logger.DebugLogsEnabled)
+                Debug(jArray.SerializeForLog(), showOnScreen);
+        }
+
         public static void Debug(JObject jObject, bool showOnScreen = false)
         {
             if (jObject != null && Logger.DebugLogsEnabled)
                 Debug(jObject.SerializeForLog(), showOnScreen);
+        }
+
+        public static void Debug(IEnumerable array, bool showOnScreen = false)
+        {
+            if (array != null && Logger.DebugLogsEnabled)
+                Debug(JArray.FromObject(array), showOnScreen);
         }
 
         public static void Debug(object @object, bool showOnScreen = false)
@@ -64,10 +92,28 @@ namespace Grimolfr.SubnauticaZero
                 Logger.Log(Logger.Level.Info, message, showOnScreen: showOnScreen);
         }
 
+        public static void Info(JArray jArray, bool showOnScreen = false)
+        {
+            if (jArray != null)
+                Info(jArray.SerializeForLog(), showOnScreen);
+        }
+
         public static void Info(JObject jObject, bool showOnScreen = false)
         {
             if (jObject != null)
-                Debug(jObject.SerializeForLog(), showOnScreen);
+                Info(jObject.SerializeForLog(), showOnScreen);
+        }
+
+        public static void Info(IEnumerable array, bool showOnScreen = false)
+        {
+            if (array != null)
+                Info(JArray.FromObject(array), showOnScreen);
+        }
+
+        public static void Info(object @object, bool showOnScreen = false)
+        {
+            if (@object != null)
+                Info(JObject.FromObject(@object), showOnScreen);
         }
 
         // Warning
@@ -104,7 +150,9 @@ namespace Grimolfr.SubnauticaZero
         private static JsonSerializer CreateLoggingJsonSerializer()
         {
             var serializer = JsonSerializer.CreateDefault(LoggingJsonSerializerSettings);
+
             serializer.Converters.Add(new StringEnumConverter());
+
             return serializer;
         }
     }
