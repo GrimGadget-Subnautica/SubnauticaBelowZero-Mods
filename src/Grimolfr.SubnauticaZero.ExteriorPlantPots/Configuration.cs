@@ -10,9 +10,6 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots
     internal class Configuration
         : ConfigFile
     {
-        [Toggle(Label = "Enable", Tooltip = "Check to enable this mod.", Order = 0)]
-        public bool IsEnabled = true;
-
         [Toggle(
             Label = "Require Exterior Growbed",
             Tooltip = "If checked, exterior pots become available along with the exterior growbed.  "

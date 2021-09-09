@@ -44,6 +44,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\dependencies\SubnauticaZero\BepInEx\core\0Harmony.dll</HintPath>
       <Private>false</Private>

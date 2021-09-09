@@ -22,22 +22,17 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots
             if (!File.Exists(Config.JsonFilePath))
                 Config.Save();
 
-            if (Config.IsEnabled)
-            {
-                Log.Info($"Registering {ModName} prefabs...");
-                new ExteriorPlantPotPrefab().Patch();
-                new ExteriorPlantPot2Prefab().Patch();
-                new ExteriorPlantPot3Prefab().Patch();
+            Log.Info($"Registering {ModName} prefabs...");
+            new ExteriorPlantPotPrefab().Patch();
+            new ExteriorPlantPot2Prefab().Patch();
+            new ExteriorPlantPot3Prefab().Patch();
 
-                var assembly = Assembly.GetExecutingAssembly();
-                var assemblyName = assembly.GetName().Name;
+            var assembly = Assembly.GetExecutingAssembly();
+            var assemblyName = assembly.GetName().Name;
 
-                Log.Info($"Processing patches from {assemblyName}...");
-                var harmony = new Harmony($"Grimolfr_{assemblyName}");
-                harmony.PatchAll(assembly);
-            }
-            else
-                Log.Debug($"'{ModName}' is disabled.");
+            Log.Info($"Processing patches from {assemblyName}...");
+            var harmony = new Harmony($"Grimolfr_{assemblyName}");
+            harmony.PatchAll(assembly);
         }
     }
 }
