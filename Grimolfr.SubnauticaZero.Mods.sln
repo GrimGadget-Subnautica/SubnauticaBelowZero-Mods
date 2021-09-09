@@ -30,15 +30,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grimolfr.SubnauticaZero.ExteriorPlantPots", "src\Grimolfr.SubnauticaZero.ExteriorPlantPots\Grimolfr.SubnauticaZero.ExteriorPlantPots.csproj", "{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grimolfr.SubnauticaZero.ScannerSalvage", "src\Grimolfr.SubnauticaZero.ScannerSalvage\Grimolfr.SubnauticaZero.ScannerSalvage.csproj", "{8BD4697D-E607-4939-B0A3-35A0522FD742}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grimolfr.SubnauticaZero.ScannerSalvage", "src\Grimolfr.SubnauticaZero.ScannerSalvage\Grimolfr.SubnauticaZero.ScannerSalvage.csproj", "{E378F1EF-8041-466E-A839-275E21F2EE08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{E3933382-44F9-461D-9DBA-CA58CC93C936}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Grimolfr.SubnauticaZero.Shared", "src\shared\Grimolfr.SubnauticaZero.Shared\Grimolfr.SubnauticaZero.Shared.shproj", "{FA31B060-7843-4453-860D-1F5A3AD036BA}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Grimolfr.SubnauticaZero.Shared.Recipes", "src\shared\Grimolfr.SubnauticaZero.Shared.Recipes\Grimolfr.SubnauticaZero.Shared.Recipes.shproj", "{3CAE6753-1EBC-4D1A-9A88-2FDE45BF5DFF}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		src\shared\Grimolfr.SubnauticaZero.Shared\Grimolfr.SubnauticaZero.Shared.projitems*{8bd4697d-e607-4939-b0a3-35a0522fd742}*SharedItemsImports = 5
+		src\shared\Grimolfr.SubnauticaZero.Shared.Recipes\Grimolfr.SubnauticaZero.Shared.Recipes.projitems*{3cae6753-1ebc-4d1a-9a88-2fde45bf5dff}*SharedItemsImports = 13
+		src\shared\Grimolfr.SubnauticaZero.Shared.Recipes\Grimolfr.SubnauticaZero.Shared.Recipes.projitems*{e378f1ef-8041-466e-a839-275e21f2ee08}*SharedItemsImports = 5
+		src\shared\Grimolfr.SubnauticaZero.Shared\Grimolfr.SubnauticaZero.Shared.projitems*{e378f1ef-8041-466e-a839-275e21f2ee08}*SharedItemsImports = 5
 		src\shared\Grimolfr.SubnauticaZero.Shared\Grimolfr.SubnauticaZero.Shared.projitems*{fa31b060-7843-4453-860d-1f5a3ad036ba}*SharedItemsImports = 13
 		src\shared\Grimolfr.SubnauticaZero.Shared\Grimolfr.SubnauticaZero.Shared.projitems*{ff33c78b-d70c-492f-a5d1-4fcab1dc2a42}*SharedItemsImports = 5
 	EndGlobalSection
@@ -51,19 +55,20 @@ Global
 		{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8BD4697D-E607-4939-B0A3-35A0522FD742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8BD4697D-E607-4939-B0A3-35A0522FD742}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BD4697D-E607-4939-B0A3-35A0522FD742}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BD4697D-E607-4939-B0A3-35A0522FD742}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E378F1EF-8041-466E-A839-275E21F2EE08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E378F1EF-8041-466E-A839-275E21F2EE08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E378F1EF-8041-466E-A839-275E21F2EE08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E378F1EF-8041-466E-A839-275E21F2EE08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FF33C78B-D70C-492F-A5D1-4FCAB1DC2A42} = {0AFB6860-6622-482C-93E5-8B2032B44F96}
-		{8BD4697D-E607-4939-B0A3-35A0522FD742} = {0AFB6860-6622-482C-93E5-8B2032B44F96}
+		{E378F1EF-8041-466E-A839-275E21F2EE08} = {0AFB6860-6622-482C-93E5-8B2032B44F96}
 		{E3933382-44F9-461D-9DBA-CA58CC93C936} = {0AFB6860-6622-482C-93E5-8B2032B44F96}
 		{FA31B060-7843-4453-860D-1F5A3AD036BA} = {E3933382-44F9-461D-9DBA-CA58CC93C936}
+		{3CAE6753-1EBC-4D1A-9A88-2FDE45BF5DFF} = {E3933382-44F9-461D-9DBA-CA58CC93C936}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6D17218-7E6A-400C-A983-5BA2DD49AE00}

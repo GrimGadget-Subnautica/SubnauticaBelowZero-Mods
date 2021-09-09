@@ -13,6 +13,7 @@
   "VersionDependencies": {
     "SMLHelper": "2.9"
   },
+  "LoadBefore": [ "CopperFromScanning" ],
   "LoadAfter": [],
   "Enable": "true"
 }
