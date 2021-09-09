@@ -6,7 +6,7 @@
     <SharedGUID>fa31b060-7843-4453-860d-1f5a3ad036ba</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Grimolfr.SubnauticaZero.Shared</Import_RootNamespace>
+    <Import_RootNamespace>Grimolfr.SubnauticaZero</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Log.cs" />
