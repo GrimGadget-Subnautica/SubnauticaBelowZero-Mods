@@ -23,7 +23,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
         public bool ReclaimSalvage()
         {
-            var salvageCount = new Random().Next(_MinSalvage, MaxSalvage + 1);
+            var salvageCount = new Random().Next(_MinSalvage, Math.Max(_MinSalvage, Math.Min(3, MaxSalvage)) + 1);
 
             var salvage = SelectSalvage(salvageCount).ToArray();
 
