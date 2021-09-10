@@ -25,7 +25,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
         {
             var salvageCount = new Random().Next(_MinSalvage, MaxSalvage + 1);
 
-            var salvage = SelectSalvage(salvageCount);
+            var salvage = SelectSalvage(salvageCount).ToArray();
 
             foreach (var techType in salvage)
                 CraftData.AddToInventory(techType);
@@ -34,10 +34,10 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                 $"Salvaged: {Environment.NewLine}"
                 + $"{JArray.FromObject(salvage, Log.LoggingJsonSerializer).SerializeForLog()}");
 
-            return salvage.Count > 0;
+            return salvage.Length > 0;
         }
 
-        private List<TechType> SelectSalvage(int salvageCount)
+        private IEnumerable<TechType> SelectSalvage(int salvageCount)
         {
             var random = new Random();
             var salvaged = new List<TechType>(salvageCount);
@@ -65,7 +65,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             for (var c = salvaged.Count; c < _MinSalvage; c++)
                 salvaged.Add(TechType.Titanium);
 
-            return salvaged;
+            return salvaged.OrderBy(tt => tt);
         }
 
         private static IEnumerable<SalvageableItem> SelectSalvageableMaterials(SalvageHelper helper)

@@ -10,6 +10,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Patches
         [HarmonyPatch(nameof(CraftData.AddToInventory))]
         [HarmonyPrefix]
         public static bool PreAddToInventory(
+            bool __runOriginal,
             TechType techType,
             int num = 1,
             bool noMessage = false,
@@ -17,11 +18,18 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Patches
         {
             Log.Debug($"{MethodBase.GetCurrentMethod().Name}::{techType} ({num})");
 
+            if (!__runOriginal) return false;
+
             if (BlueprintHandTargetPatcher.DataBoxTechType != null)
             {
                 // Got a blueprint chip from a data box
                 Log.Info($"Retrieved {BlueprintHandTargetPatcher.DataBoxTechType!.Value} blueprint data chip from a data box.");
-                return true;
+
+                // All we got was a thumb drive with a blueprint that we already unlocked.  We'll melt it down for the metals.
+                CraftData.AddToInventory(TechType.Copper);
+                CraftData.AddToInventory(TechType.Gold);
+
+                return false;
             }
 
             if (techType == TechType.Titanium && num == 2 && !noMessage && spawnIfCantAdd)

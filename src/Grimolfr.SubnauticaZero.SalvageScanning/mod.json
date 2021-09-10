@@ -2,7 +2,7 @@
   "NexusId": { "BelowZero": "" },
   "Id": "Grimolfr_SalvageScanningBZ",
   "DisplayName": "Salvage Scanning BZ",
-  "Version": "1.0.0-preview-1.0",
+  "Version": "1.0.0.0",
 
   "Game": "BelowZero",
   "AssemblyName": "Grimolfr.SubnauticaZero.SalvageScanning.dll",

@@ -11,12 +11,12 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.1.1</Version>
+    <Version>1.0.2.0</Version>
     <Description>
       <![CDATA[
 
-1.0.1.1
-  * Cleaned up and streamlined some code.  No change in game mechanics
+1.0.2
+  * Optimized some code
 
 ]]]]>
     </Description>
