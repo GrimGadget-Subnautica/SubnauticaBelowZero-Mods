@@ -6,31 +6,31 @@ using SMLHelper.V2.Crafting;
 
 namespace Grimolfr.SubnauticaZero
 {
-    internal class MaterialsList
-        : IList<Material>
+    internal class MaterialList
+        : IList<Material>, ICloneable
     {
         private readonly List<Material> _list;
 
-        public MaterialsList()
+        public MaterialList()
         {
             _list = new List<Material>();
         }
 
-        public MaterialsList(int capacity)
+        public MaterialList(int capacity)
         {
             if (capacity <= 0) throw new ArgumentOutOfRangeException(nameof(capacity));
 
             _list = new List<Material>(capacity);
         }
 
-        public MaterialsList(IEnumerable<Material> collection)
+        public MaterialList(IEnumerable<Material> collection)
         {
             if (collection == null) throw new ArgumentNullException(nameof(collection));
 
             _list = new List<Material>(collection);
         }
 
-        public MaterialsList(RecipeData recipe)
+        public MaterialList(RecipeData recipe)
         {
             _list = new List<Material>(recipe?.ingredientCount ?? 0);
 
@@ -56,6 +56,11 @@ namespace Grimolfr.SubnauticaZero
         public void Clear()
         {
             _list.Clear();
+        }
+
+        public MaterialList Clone()
+        {
+            return new MaterialList(this.Select(m => m.Clone()));
         }
 
         public bool Contains(Material item)
@@ -91,6 +96,16 @@ namespace Grimolfr.SubnauticaZero
         public void RemoveAt(int index)
         {
             _list.RemoveAt(index);
+        }
+
+        internal IEnumerable<(TechType TechType, int Depth)> FlattenMaterialHierarchy(int depth = 0)
+        {
+            return this.SelectMany(mat => Material.FlattenMaterialHierarchy(mat, depth));
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

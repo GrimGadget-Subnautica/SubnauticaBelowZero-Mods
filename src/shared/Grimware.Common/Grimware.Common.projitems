@@ -3,15 +3,13 @@
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>3cae6753-1ebc-4d1a-9a88-2fde45bf5dff</SharedGUID>
+    <SharedGUID>f5f3d92f-2468-415e-a02f-bdc896f86d26</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Grimolfr.SubnauticaZero</Import_RootNamespace>
+    <Import_RootNamespace>Grimware.Common</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)JsonConverters\TechTypeLoggingConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Material.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MaterialList.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TechTypeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AbstractEqualityComparer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EqualityComparer.cs" />
   </ItemGroup>
 </Project>

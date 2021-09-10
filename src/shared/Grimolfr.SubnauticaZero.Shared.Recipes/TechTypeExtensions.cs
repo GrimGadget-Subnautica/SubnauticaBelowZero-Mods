@@ -1,20 +1,27 @@
-﻿using SMLHelper.V2.Crafting;
+﻿using System.Collections.Concurrent;
+using SMLHelper.V2.Crafting;
 using SMLHelper.V2.Handlers;
 
 namespace Grimolfr.SubnauticaZero
 {
     internal static class TechTypeExtensions
     {
-        public static RecipeData GetRecipe(this TechType techType)
+        private static readonly ConcurrentDictionary<TechType, RecipeData> _TechRecipes = new ConcurrentDictionary<TechType, RecipeData>();
+
+        public static RecipeData GetRecipe(this TechType? techType) => techType == null ? null : GetRecipe(techType.Value);
+
+        public static RecipeData GetRecipe(this TechType techType) =>
+            _TechRecipes.GetOrAdd(techType, tt => GetTechRecipe(techType) ?? GetScannerEntryRecipe(techType));
+
+        private static RecipeData GetScannerEntryRecipe(TechType techType)
         {
-            return ((TechType?)techType).GetRecipe();
+            var entryData = PDAScanner.GetEntryData(techType);
+            return
+                entryData != null
+                    ? CraftDataHandler.GetRecipeData(entryData.blueprint)
+                    : null;
         }
 
-        public static RecipeData GetRecipe(this TechType? techType)
-        {
-            return
-                CraftDataHandler.GetRecipeData(techType ?? default)
-                ?? CraftDataHandler.GetRecipeData(PDAScanner.GetEntryData(techType ?? default).blueprint);
-        }
+        private static RecipeData GetTechRecipe(TechType techType) => CraftDataHandler.GetRecipeData(techType);
     }
 }

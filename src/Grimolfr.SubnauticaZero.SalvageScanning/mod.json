@@ -1,11 +1,11 @@
 {
   "NexusId": { "BelowZero": "" },
-  "Id": "Grimolfr_ScannerSalvage",
-  "DisplayName": "Scanner Salvage BZ",
+  "Id": "Grimolfr_SalvageScanningBZ",
+  "DisplayName": "Salvage Scanning BZ",
   "Version": "1.0.0-preview-1.0",
 
   "Game": "BelowZero",
-  "AssemblyName": "Grimolfr.SubnauticaZero.ScannerSalvage.dll",
+  "AssemblyName": "Grimolfr.SubnauticaZero.SalvageScanning.dll",
   "Author": "Grimolfr",
   "Dependencies": [
     "SMLHelper"
@@ -13,7 +13,7 @@
   "VersionDependencies": {
     "SMLHelper": "2.9"
   },
-  "LoadBefore": [ "CopperFromScanning" ],
+  "LoadBefore": [],
   "LoadAfter": [],
   "Enable": "true"
 }

@@ -75,13 +75,7 @@ namespace Grimolfr.SubnauticaZero
         public static void Debug(IEnumerable array, bool showOnScreen = false)
         {
             if (array != null && Logger.DebugLogsEnabled)
-                Debug(JArray.FromObject(array), showOnScreen);
-        }
-
-        public static void Debug(object @object, bool showOnScreen = false)
-        {
-            if (@object != null && Logger.DebugLogsEnabled)
-                Debug(JObject.FromObject(@object), showOnScreen);
+                Debug(JArray.FromObject(array, LoggingJsonSerializer), showOnScreen);
         }
 
         // Information
@@ -107,13 +101,7 @@ namespace Grimolfr.SubnauticaZero
         public static void Info(IEnumerable array, bool showOnScreen = false)
         {
             if (array != null)
-                Info(JArray.FromObject(array), showOnScreen);
-        }
-
-        public static void Info(object @object, bool showOnScreen = false)
-        {
-            if (@object != null)
-                Info(JObject.FromObject(@object), showOnScreen);
+                Info(JArray.FromObject(array, LoggingJsonSerializer), showOnScreen);
         }
 
         // Warning

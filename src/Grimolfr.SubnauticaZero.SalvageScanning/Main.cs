@@ -5,12 +5,12 @@ using HarmonyLib;
 using QModManager.API.ModLoading;
 using SMLHelper.V2.Handlers;
 
-namespace Grimolfr.SubnauticaZero.ScannerSalvage
+namespace Grimolfr.SubnauticaZero.SalvageScanning
 {
     [QModCore]
     public static class Main
     {
-        internal const string ModName = "Scanner Salvage";
+        internal const string ModName = "Scanner ReclaimSalvage";
 
         internal static Configuration Config { get; private set; }
 
@@ -22,8 +22,6 @@ namespace Grimolfr.SubnauticaZero.ScannerSalvage
         [QModPatch]
         public static void Initialize()
         {
-            Log.Debug(MethodBase.GetCurrentMethod().Name);
-
             Log.Info($"Registering {ModName} configuration...");
             Config = OptionsPanelHandler.Main.RegisterModOptions<Configuration>();
             if (!File.Exists(Config.JsonFilePath))

@@ -2,7 +2,7 @@
 using SMLHelper.V2.Json;
 using SMLHelper.V2.Options.Attributes;
 
-namespace Grimolfr.SubnauticaZero.ScannerSalvage
+namespace Grimolfr.SubnauticaZero.SalvageScanning
 {
     [Menu(
         Main.ModName,

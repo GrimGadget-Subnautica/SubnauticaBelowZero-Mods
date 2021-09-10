@@ -67,7 +67,6 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
             Log.Debug($"Creating new instance of {TechType}");
             var instance = Object.Instantiate(prefab);
 
-            Log.Debug("Setting Constructable properties...");
             var constructable = instance.GetComponent<Constructable>();
             constructable.techType = TechType;
             constructable.allowedInBase = false;
@@ -80,15 +79,12 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
             constructable.forceUpright = true;
             constructable.rotationEnabled = true;
 
-            Log.Debug("Setting Planter properties...");
             var planter = instance.GetComponent<Planter>();
             planter.isIndoor = false;
             planter.environment = Planter.PlantEnvironment.Dynamic;
 
-            Log.Debug("Setting TechTag properties...");
             instance.GetComponent<TechTag>().type = TechType;
 
-            Log.Debug("Setting PrefabIdentifier properties...");
             instance.GetComponent<PrefabIdentifier>().ClassId = ClassID;
 
             foreach (var renderer in instance.GetComponentsInChildren<Renderer>(true) ?? Array.Empty<Renderer>())

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using HarmonyLib;
 
-namespace Grimolfr.SubnauticaZero.ScannerSalvage.Patches
+namespace Grimolfr.SubnauticaZero.SalvageScanning.Patches
 {
     [HarmonyPatch(typeof(BlueprintHandTarget))]
     internal static class BlueprintHandTargetPatcher
@@ -12,9 +12,6 @@ namespace Grimolfr.SubnauticaZero.ScannerSalvage.Patches
         [HarmonyPrefix]
         public static bool PreUnlockBlueprint(BlueprintHandTarget __instance)
         {
-            Log.Debug($"{MethodBase.GetCurrentMethod().Name}::{__instance.unlockTechType}");
-            Log.Debug(__instance);
-
             DataBoxTechType = __instance.unlockTechType;
 
             return true;
@@ -24,8 +21,6 @@ namespace Grimolfr.SubnauticaZero.ScannerSalvage.Patches
         [HarmonyPostfix]
         public static void PostUnlockBlueprint()
         {
-            Log.Debug(MethodBase.GetCurrentMethod().Name);
-
             DataBoxTechType = null;
         }
     }

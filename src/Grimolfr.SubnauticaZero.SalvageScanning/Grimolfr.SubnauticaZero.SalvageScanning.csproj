@@ -87,4 +87,6 @@
 
   <Import Project="..\shared\Grimolfr.SubnauticaZero.Shared.Recipes\Grimolfr.SubnauticaZero.Shared.Recipes.projitems" Label="Shared" />
 
+  <Import Project="..\shared\Grimware.Common\Grimware.Common.projitems" Label="Shared" />
+
 </Project>
