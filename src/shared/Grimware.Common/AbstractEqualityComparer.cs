@@ -10,7 +10,7 @@ namespace Grimware
     /// <remarks>
     /// </remarks>
     /// <typeparam name="T">The type of objects to compare.</typeparam>
-    public class AbstractEqualityComparer<T>
+    internal class AbstractEqualityComparer<T>
         : EqualityComparer<T>
     {
         private readonly Func<T, T, bool> _equalityComparison;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Grimolfr.SubnauticaZero
@@ -12,7 +11,7 @@ namespace Grimolfr.SubnauticaZero
             TechType = ingredient.techType;
             Amount = ingredient.amount;
 
-            ComponentMaterials = new MaterialList(TechType.GetRecipe());
+            ComponentMaterials = new MaterialList(TechType.GetRecipe(), this);
         }
 
         private Material(Material source)
@@ -22,25 +21,21 @@ namespace Grimolfr.SubnauticaZero
             TechType = source.TechType;
             Amount = source.Amount;
 
-            ComponentMaterials = source.ComponentMaterials.Clone();
+            ComponentMaterials = new MaterialList(source.ComponentMaterials.Select(s => new Material(s) {Parent = this}));
         }
 
         public TechType TechType { get; }
 
-        public int Amount { get; }
+        public int Amount { get;  set; }
 
-        public MaterialList ComponentMaterials { get; }
+        public Material Parent { get; internal set; }
+
+        public MaterialList ComponentMaterials { get; set; }
 
         public Material Clone()
         {
             return new Material(this);
         }
-
-        public IEnumerable<(TechType TechType, int Depth)> FlattenMaterialHierarchy(int fromDepth = 0) => FlattenMaterialHierarchy(this, fromDepth);
-
-        internal static IEnumerable<(TechType TechType, int Depth)> FlattenMaterialHierarchy(Material material, int depth) =>
-            Enumerable.Repeat<(TechType TechType, int Depth)>((material.TechType, depth), material.Amount)
-                .Concat(material.ComponentMaterials.FlattenMaterialHierarchy(depth + 1));
 
         object ICloneable.Clone()
         {

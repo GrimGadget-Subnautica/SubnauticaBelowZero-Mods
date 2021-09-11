@@ -39,7 +39,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Patches
                 Log.Info($"Scanned {scannedTech}.");
 
                 // reclaim salvage from the fragment
-                return !new SalvageHelper(scannedTech.GetRecipe()).ReclaimSalvage();
+                return !new SalvageTool(scannedTech.GetRecipe()).ReclaimSalvage();
             }
 
             // If we made it here, we didn't do anything.  Move on to the next patch, if any.

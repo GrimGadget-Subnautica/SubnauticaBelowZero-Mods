@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using HarmonyLib;
+﻿using HarmonyLib;
 
 namespace Grimolfr.SubnauticaZero.SalvageScanning.Patches
 {

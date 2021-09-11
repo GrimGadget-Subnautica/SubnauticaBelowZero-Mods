@@ -6,68 +6,108 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 {
     internal static class Salvageable
     {
-        public static IEnumerable<(TechType TechType, int Rarity)> AllTypes =>
-            Minerals
-                .Concat(BasicMaterials)
-                .Concat(AdvancedMaterials)
-                .Concat(ElectronicsMaterials)
-                .Distinct(EqualityComparer.Create<(TechType TechType, int Rarity), TechType>(x => x.TechType));
-
-        public static readonly IEnumerable<(TechType TechType, int Rarity)> Minerals =
-            new[]
+        private static readonly IDictionary<TechType, double> Minerals =
+            new Dictionary<TechType, double>
             {
-                (TechType.Titanium, 1),
-                (TechType.Copper, 2),
-                (TechType.Quartz, 2),
-                (TechType.Salt, 4),
-                (TechType.Silver, 8),
-                (TechType.Lead, 16),
-                (TechType.Sulphur, 32),
-                (TechType.Gold, 32),
-                (TechType.Lithium, 64),
-                (TechType.AluminumOxide, 128),
-                (TechType.Diamond, 128),
-                (TechType.UraniniteCrystal, 128),
-                (TechType.Magnetite, 256),
-                (TechType.Nickel, 256),
-                (TechType.Kyanite, 512),
+                {TechType.Titanium, 1},
+                {TechType.Copper, 0.8125},
+                {TechType.Quartz, 0.8125},
+                {TechType.Salt, 0.75},
+                {TechType.Silver, 0.6875},
+                {TechType.Lead, 0.5625},
+                {TechType.Sulphur, 0.5},
+                {TechType.Gold, 0.5},
+                {TechType.Lithium, 0.5},
+                {TechType.AluminumOxide, 0.375},
+                {TechType.Diamond, 0.3125},
+                {TechType.UraniniteCrystal, 0.25},
+                {TechType.Magnetite, 0.125},
+                {TechType.Nickel, 0.0625},
+                {TechType.Kyanite, 0.03125},
             };
 
-        public static readonly IEnumerable<(TechType TechType, int Rarity)> BasicMaterials =
-            new[]
+        private static readonly IDictionary<TechType, double> BasicMaterials =
+            new Dictionary<TechType, double>
             {
-                (TechType.FiberMesh, 2),
-                (TechType.Silicone, 2),
-                (TechType.Lubricant, 4),
-                (TechType.Glass, 8),
-                (TechType.TitaniumIngot, 16),
-                (TechType.EnameledGlass, 32),
-                (TechType.PlasteelIngot, 128),
+                {TechType.FiberMesh, 0.75},
+                {TechType.Lubricant, 0.75},
+                {TechType.Silicone, 0.6875},
+                {TechType.Glass, 0.6875},
+                {TechType.TitaniumIngot, 0.5625},
+                {TechType.EnameledGlass, 0.5},
+                {TechType.PlasteelIngot, 0.375},
             };
 
-        public static readonly IEnumerable<(TechType TechType, int Rarity)> AdvancedMaterials =
-            new[]
+        private static readonly IDictionary<TechType, double> AdvancedMaterials =
+            new Dictionary<TechType, double>
             {
-                (TechType.Aerogel, 64),
-                (TechType.AramidFibers, 128),
-                (TechType.HydrochloricAcid, 128),
-                (TechType.Benzene, 256),
-                (TechType.Polyaniline, 256),
-                (TechType.PrecursorIonCrystal, 512),
+                {TechType.Aerogel, 0.4375},
+                {TechType.AramidFibers, 0.25},
+                {TechType.HydrochloricAcid, 0.375},
+                {TechType.Benzene, 0.25},
+                {TechType.Polyaniline, 0.125},
+                {TechType.PrecursorIonCrystal, 0},
             };
 
-        public static readonly IEnumerable<(TechType TechType, int Rarity)> ElectronicsMaterials =
-            new[]
+        private static readonly IDictionary<TechType, double> Electronics =
+            new Dictionary<TechType, double>
             {
-                (TechType.CopperWire, 4),
-                (TechType.Battery, 4),
-                (TechType.WiringKit, 16),
-                (TechType.PowerCell, 16),
-                (TechType.ComputerChip, 64),
-                (TechType.AdvancedWiringKit, 256),
-                (TechType.PrecursorIonBattery, 1024),
-                (TechType.PrecursorIonPowerCell, 2048),
-                (TechType.ReactorRod, 2048),
+                {TechType.CopperWire, 0.75},
+                {TechType.Battery, 0.6875},
+                {TechType.WiringKit, 0.5625},
+                {TechType.PowerCell, 0.5},
+                {TechType.ComputerChip, 0.5},
+                {TechType.AdvancedWiringKit, 0.4375},
+                {TechType.ReactorRod, 0.015625},
+                {TechType.PrecursorIonBattery, 0},
+                {TechType.PrecursorIonPowerCell, 0},
             };
+
+        public static IDictionary<TechType, double> Weights
+        {
+            get
+            {
+                var weights = new Dictionary<TechType, double>().AsEnumerable();
+
+                if (Main.Config.OperationMode is OperationMode.Basic or OperationMode.Any)
+                {
+                    weights =
+                        weights
+                            .Concat(Minerals)
+                            .Concat(BasicMaterials);
+                }
+
+                if (Main.Config.OperationMode is OperationMode.Advanced or OperationMode.Any)
+                {
+                    weights =
+                        weights
+                            .Concat(AdvancedMaterials)
+                            .Concat(Electronics);
+                }
+
+                return
+                    weights
+                        .GroupJoin(
+                            ConfigWeights,
+                            w => w.Key,
+                            cw => cw.Key,
+                            (w, cList) =>
+                                new
+                                {
+                                    TechType = w.Key,
+                                    Weight =
+                                        (!cList.Any() ? (double?)null : cList.Min(c => c.Value))
+                                        ?? w.Value
+                                })
+                        .Where(a => a.TechType != TechType.None && a.Weight is > 0.0 and <= 1.0)
+                        .ToDictionary(a => a.TechType, a => a.Weight);
+            }
+        }
+
+        private static IDictionary<TechType, double> ConfigWeights =>
+            Main.Config.SalvageProbabilities
+                .Select(kvp => new {TechType = kvp.Key.ToEnum<TechType>(), Weight = kvp.Value})
+                .Where(a => a.TechType != null && a.TechType != TechType.None & a.Weight is > 0.0 and <= 1.0)
+                .ToDictionary(a => a.TechType.Value, a => a.Weight);
     }
 }

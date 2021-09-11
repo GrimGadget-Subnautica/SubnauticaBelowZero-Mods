@@ -11,5 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AbstractEqualityComparer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EqualityComparer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Linq\EnumerableExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />
   </ItemGroup>
 </Project>

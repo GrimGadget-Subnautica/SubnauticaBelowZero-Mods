@@ -30,12 +30,12 @@ namespace Grimolfr.SubnauticaZero
             _list = new List<Material>(collection);
         }
 
-        public MaterialList(RecipeData recipe)
+        public MaterialList(RecipeData recipe, Material parent = null)
         {
             _list = new List<Material>(recipe?.ingredientCount ?? 0);
 
             if (recipe != null)
-                _list.AddRange(recipe.Ingredients.Select(i => new Material(i)));
+                _list.AddRange(recipe.Ingredients.Select(i => new Material(i) {Parent = parent}));
         }
 
         public int Count => _list.Count;
@@ -96,11 +96,6 @@ namespace Grimolfr.SubnauticaZero
         public void RemoveAt(int index)
         {
             _list.RemoveAt(index);
-        }
-
-        internal IEnumerable<(TechType TechType, int Depth)> FlattenMaterialHierarchy(int depth = 0)
-        {
-            return this.SelectMany(mat => Material.FlattenMaterialHierarchy(mat, depth));
         }
 
         object ICloneable.Clone()

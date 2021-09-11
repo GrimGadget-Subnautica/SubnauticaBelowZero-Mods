@@ -7,14 +7,25 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
     [Menu(
         Main.ModName,
         MemberProcessing = MenuAttribute.Members.Implicit,
-        LoadOn = MenuAttribute.LoadEvents.MenuOpened,
-        SaveOn = MenuAttribute.SaveEvents.ChangeValue)]
+        LoadOn = MenuAttribute.LoadEvents.MenuOpened)]
     internal class Configuration
         : ConfigFile
     {
-        public IDictionary<string, float> Weights =
-            new Dictionary<string, float>
+        [Choice(
+            Label = "Salvage Operation Mode",
+            Tooltip = "Selects the operational mode of the salvage functionality.  "
+                + "'Any' will return any possible salvage result from the Basic or Advanced setting.  "
+                + "'Basic' will only return non-organic raw materials and basic materials."
+                + "'Advanced' will only return advanced resources and electronics, but with a possibility of receiving nothing at all.  ")]
+        public OperationMode OperationMode = OperationMode.Any;
+
+        public IDictionary<string, double> SalvageProbabilities =
+            new Dictionary<string, double>
             {
+                {"PrecursorIonCrystal", 0.03125},
+                {"PrecursorIonBattery", 0.0078125},
+                {"PrecursorIonPowerCell", 0.00390625},
             };
+
     }
 }

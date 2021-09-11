@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Grimware
 {
-    public static class EqualityComparer
+    internal static class EqualityComparer
     {
         public static IEqualityComparer<T> Create<T>(Func<T, T, bool> equalityComparison, Func<T, int> hashFunction)
         {
