@@ -38,9 +38,9 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             {
                 (TechType.FiberMesh, 2),
                 (TechType.Silicone, 2),
-                (TechType.Lubricant, 2),
+                (TechType.Lubricant, 4),
                 (TechType.Glass, 8),
-                (TechType.TitaniumIngot, 8),
+                (TechType.TitaniumIngot, 16),
                 (TechType.EnameledGlass, 32),
                 (TechType.PlasteelIngot, 128),
             };
@@ -50,24 +50,24 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             {
                 (TechType.Aerogel, 64),
                 (TechType.AramidFibers, 128),
-                (TechType.HydrochloricAcid, 256),
-                (TechType.Benzene, 512),
-                (TechType.Polyaniline, 512),
-                (TechType.PrecursorIonCrystal, 1024),
+                (TechType.HydrochloricAcid, 128),
+                (TechType.Benzene, 256),
+                (TechType.Polyaniline, 256),
+                (TechType.PrecursorIonCrystal, 512),
             };
 
         public static readonly IEnumerable<(TechType TechType, int Rarity)> ElectronicsMaterials =
             new[]
             {
                 (TechType.CopperWire, 4),
+                (TechType.Battery, 4),
                 (TechType.WiringKit, 16),
-                (TechType.Battery, 16),
-                (TechType.PowerCell, 32),
-                (TechType.ComputerChip, 128),
+                (TechType.PowerCell, 16),
+                (TechType.ComputerChip, 64),
                 (TechType.AdvancedWiringKit, 256),
+                (TechType.PrecursorIonBattery, 1024),
+                (TechType.PrecursorIonPowerCell, 2048),
                 (TechType.ReactorRod, 2048),
-                (TechType.PrecursorIonBattery, 2048),
-                (TechType.PrecursorIonPowerCell, 4096),
             };
     }
 }
