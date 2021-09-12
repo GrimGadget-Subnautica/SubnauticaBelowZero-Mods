@@ -60,10 +60,6 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                             })
                         .ToArray();
 
-                Log.Debug(
-                    $"Salvageable Items: {Environment.NewLine}"
-                    + JArray.FromObject(salvageList, Log.LoggingJsonSerializer).SerializeForLog());
-
                 // Select a salvage item
                 var choice = SelectItem(salvageList);
                 if (choice == null) yield break;
@@ -84,7 +80,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             while (choice.Parent != null)
                 choice = choice.Parent;
 
-            var top = _materialList.FirstOrDefault(m => m.TechType == choice.TechType);
+            var top = _materialList.First(m => m.TechType == choice.TechType);
 
             if (top.Amount > 1)
                 top.Amount--;

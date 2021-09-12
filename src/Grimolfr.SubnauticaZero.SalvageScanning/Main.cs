@@ -29,8 +29,6 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
             if (!File.Exists(Config.JsonFilePath))
                 Config.Save();
 
-            Log.Debug(JObject.FromObject(Salvageable.Weights, Log.LoggingJsonSerializer));
-
             var assembly = Assembly.GetExecutingAssembly();
             var assemblyName = assembly.GetName().Name;
 
