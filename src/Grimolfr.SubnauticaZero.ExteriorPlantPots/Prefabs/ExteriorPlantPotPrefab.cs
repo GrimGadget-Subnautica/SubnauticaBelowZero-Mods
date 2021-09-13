@@ -3,6 +3,7 @@ using System.Collections;
 using SMLHelper.V2.Assets;
 using SMLHelper.V2.Crafting;
 using UnityEngine;
+using UWE;
 using Object = UnityEngine.Object;
 
 namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
@@ -39,9 +40,10 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
 
         public override GameObject GetGameObject()
         {
-            var original = Resources.Load<GameObject>($"Submarine/Build/{BaseTechType}");
+            var taskResult = new TaskResult<GameObject>();
+            CoroutineHost.StartCoroutine(GetGameObjectAsync(taskResult));
 
-            return CreateInstanceFrom(Object.Instantiate(original));
+            return taskResult.Get();
         }
 
         public override IEnumerator GetGameObjectAsync(IOut<GameObject> gameObject)
