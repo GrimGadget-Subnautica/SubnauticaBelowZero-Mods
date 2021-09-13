@@ -46,12 +46,12 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
             for (var i = 0; i < MinSalvage - salvage.Count; i++) salvage.Add(TechType.Titanium);
 
+            Log.Debug(
+                $"Salvaging: {Environment.NewLine}"
+                + $"{JArray.FromObject(salvage, Log.LoggingJsonSerializer).SerializeForLog()}");
+
             foreach (var techType in salvage)
                 CraftData.AddToInventory(techType);
-
-            Log.Debug(
-                $"Salvaged: {Environment.NewLine}"
-                + $"{JArray.FromObject(salvage, Log.LoggingJsonSerializer).SerializeForLog()}");
 
             return salvage.Count > 0;
         }
