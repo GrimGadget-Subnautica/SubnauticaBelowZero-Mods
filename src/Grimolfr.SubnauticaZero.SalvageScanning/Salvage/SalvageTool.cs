@@ -101,6 +101,8 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
             var top = _materialList.First(m => m.TechType == choice.TechType);
 
+            Log.Debug($"Removing 1x {top.TechType} from salvageable materials list...");
+
             if (top.Amount > 1)
                 top.Amount--;
             else
