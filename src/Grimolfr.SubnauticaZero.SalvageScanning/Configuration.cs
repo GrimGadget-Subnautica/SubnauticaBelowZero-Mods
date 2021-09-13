@@ -17,7 +17,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
                 + "'Any' will return any possible salvage result from the Basic or Advanced setting.  "
                 + "'Basic' will only return non-organic raw materials and basic materials."
                 + "'Advanced' will only return advanced resources and electronics, but with a possibility of receiving nothing at all.  ")]
-        public OperationMode OperationMode = OperationMode.Any;
+        public OperationMode OperationMode = OperationMode.Basic;
 
         public IDictionary<string, double> SalvageProbabilities =
             new Dictionary<string, double>
