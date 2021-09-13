@@ -40,10 +40,8 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots.Prefabs
 
         public override GameObject GetGameObject()
         {
-            var taskResult = new TaskResult<GameObject>();
-            CoroutineHost.StartCoroutine(GetGameObjectAsync(taskResult));
-
-            return taskResult.Get();
+            var prefab = Resources.Load<GameObject>($"Submarine/Build/{BaseTechType.ToString()}");
+            return CreateInstanceFrom(Object.Instantiate(prefab));
         }
 
         public override IEnumerator GetGameObjectAsync(IOut<GameObject> gameObject)
