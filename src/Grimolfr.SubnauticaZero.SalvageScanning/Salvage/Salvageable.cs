@@ -63,51 +63,36 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                 {TechType.PrecursorIonPowerCell, 0},
             };
 
-        public static IDictionary<TechType, double> Weights
-        {
-            get
-            {
-                var weights = new Dictionary<TechType, double>().AsEnumerable();
-
-                if (Main.Config.OperationMode is OperationMode.Basic or OperationMode.Any)
-                {
-                    weights =
-                        weights
-                            .Concat(Minerals)
-                            .Concat(BasicMaterials);
-                }
-
-                if (Main.Config.OperationMode is OperationMode.Advanced or OperationMode.Any)
-                {
-                    weights =
-                        weights
-                            .Concat(AdvancedMaterials)
-                            .Concat(Electronics);
-                }
-
-                return
-                    weights
-                        .GroupJoin(
-                            ConfigWeights,
-                            w => w.Key,
-                            cw => cw.Key,
-                            (w, cList) =>
-                                new
-                                {
-                                    TechType = w.Key,
-                                    Weight =
-                                        (!cList.Any() ? (double?)null : cList.Min(c => c.Value))
-                                        ?? w.Value
-                                })
-                        .Where(a => a.TechType != TechType.None && a.Weight is > 0.0 and <= 1.0)
-                        .ToDictionary(a => a.TechType, a => a.Weight);
-            }
-        }
+        public static IDictionary<TechType, double> Weights =>
+            ConfiguredOperationModeSalvageTypes()
+                .GroupJoin(
+                    ConfigWeights,
+                    w => w.Key,
+                    cw => cw.Key,
+                    (w, cList) =>
+                        new
+                        {
+                            TechType = w.Key,
+                            Weight =
+                                (!cList.Any() ? (double?)null : cList.Min(c => c.Value))
+                                ?? w.Value
+                        })
+                .Where(a => a.TechType != TechType.None && a.Weight is > 0.0 and <= 1.0)
+                .ToDictionary(a => a.TechType, a => a.Weight);
 
         private static IDictionary<TechType, double> ConfigWeights =>
             Main.Config.SalvageProbabilities
                 .Select(kvp => new {TechType = kvp.Key.ToEnum<TechType>(), Weight = kvp.Value})
                 .Where(a => a.TechType != null && a.TechType != TechType.None & a.Weight is > 0.0 and <= 1.0)
                 .ToDictionary(a => a.TechType.Value, a => a.Weight);
+
+        private static IEnumerable<KeyValuePair<TechType, double>> ConfiguredOperationModeSalvageTypes() =>
+            Main.Config.OperationMode switch
+            {
+                OperationMode.Any => Minerals.Concat(BasicMaterials).Concat(AdvancedMaterials).Concat(Electronics),
+                OperationMode.Basic => Minerals.Concat(BasicMaterials),
+                OperationMode.Advanced => AdvancedMaterials.Concat(Electronics),
+                _ => Minerals.Concat(BasicMaterials).Concat(AdvancedMaterials).Concat(Electronics)
+            };
     }
 }

@@ -24,6 +24,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             Main.Config.OperationMode
                 switch
                 {
+                    OperationMode.Basic => 2,
                     OperationMode.Advanced => 0,
                     OperationMode.Any => 1,
                     _ => 2
@@ -33,9 +34,10 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             Main.Config.OperationMode
                 switch
                 {
+                    OperationMode.Basic => Math.Max(_materialList.Count, MinSalvage),
                     OperationMode.Advanced => 2,
                     OperationMode.Any => 3,
-                    _ => Math.Max(_materialList.Count, MinSalvage)
+                    _ => 2,
                 };
 
         public bool ReclaimSalvage()
