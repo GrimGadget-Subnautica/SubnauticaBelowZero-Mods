@@ -42,7 +42,9 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
         public bool ReclaimSalvage()
         {
-            var salvage = SelectSalvage(new Random().Next(MinSalvage, Math.Max(MinSalvage, MaxSalvage) + 1)).ToArray();
+            var salvage = SelectSalvage(new Random().Next(MinSalvage, Math.Max(MinSalvage, MaxSalvage) + 1)).ToList();
+
+            for (var i = 0; i < MinSalvage - salvage.Count; i++) salvage.Add(TechType.Titanium);
 
             foreach (var techType in salvage)
                 CraftData.AddToInventory(techType);
@@ -51,7 +53,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                 $"Salvaged: {Environment.NewLine}"
                 + $"{JArray.FromObject(salvage, Log.LoggingJsonSerializer).SerializeForLog()}");
 
-            return salvage.Length > 0;
+            return salvage.Count > 0;
         }
 
         private static IEnumerable<SalvageableItem> BuildSalvageableItemList(IEnumerable<Material> materialList, SalvageableItem parent = null)
