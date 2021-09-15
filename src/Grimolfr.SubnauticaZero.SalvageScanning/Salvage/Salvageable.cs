@@ -9,56 +9,56 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
         private static readonly IDictionary<TechType, double> Minerals =
             new Dictionary<TechType, double>
             {
-                {TechType.Titanium, 1},
-                {TechType.Copper, 0.75},
-                {TechType.Quartz, 0.75},
-                {TechType.Salt, 0.75},
-                {TechType.Lead, 0.6875},
-                {TechType.Silver, 0.5625},
-                {TechType.Sulphur, 0.5625},
-                {TechType.Gold, 0.5},
-                {TechType.Lithium, 0.5},
-                {TechType.AluminumOxide, 0.375},
-                {TechType.Diamond, 0.3125},
-                {TechType.UraniniteCrystal, 0.25},
-                {TechType.Magnetite, 0.125},
-                {TechType.Nickel, 0.0625},
-                {TechType.Kyanite, 0.03125},
+                {TechType.Titanium, 1.0},
+                {TechType.Copper, 1.0},
+                {TechType.Quartz, 1.0},
+                {TechType.Salt, 1.0},
+                {TechType.Lead, 1.0},
+                {TechType.Silver, 1.0},
+                {TechType.Sulphur, 1.0},
+                {TechType.Gold, 1.0},
+                {TechType.Lithium, 1.0},
+                {TechType.AluminumOxide, 1.0},
+                {TechType.Diamond, 1.0},
+                {TechType.UraniniteCrystal, 1.0},
+                {TechType.Magnetite, 1.0},
+                {TechType.Nickel, 1.0},
+                {TechType.Kyanite, 1.0},
             };
 
         private static readonly IDictionary<TechType, double> BasicMaterials =
             new Dictionary<TechType, double>
             {
-                {TechType.FiberMesh, 0.75},
-                {TechType.Lubricant, 0.75},
-                {TechType.Silicone, 0.75},
-                {TechType.Glass, 0.6875},
-                {TechType.EnameledGlass, 0.5},
-                {TechType.TitaniumIngot, 0.5},
-                {TechType.PlasteelIngot, 0.375},
+                {TechType.FiberMesh, 1.0},
+                {TechType.Lubricant, 1.0},
+                {TechType.Silicone, 1.0},
+                {TechType.Glass, 1.0},
+                {TechType.EnameledGlass, 1.0},
+                {TechType.TitaniumIngot, 1.0},
+                {TechType.PlasteelIngot, 1.0},
             };
 
         private static readonly IDictionary<TechType, double> AdvancedMaterials =
             new Dictionary<TechType, double>
             {
-                {TechType.Aerogel, 0.375},
-                {TechType.HydrochloricAcid, 0.375},
-                {TechType.AramidFibers, 0.25},
-                {TechType.Benzene, 0.25},
-                {TechType.Polyaniline, 0.125},
+                {TechType.Aerogel, 1.0},
+                {TechType.HydrochloricAcid, 1.0},
+                {TechType.AramidFibers, 1.0},
+                {TechType.Benzene, 1.0},
+                {TechType.Polyaniline, 1.0},
                 {TechType.PrecursorIonCrystal, 0},
             };
 
         private static readonly IDictionary<TechType, double> Electronics =
             new Dictionary<TechType, double>
             {
-                {TechType.CopperWire, 0.6875},
-                {TechType.Battery, 0.5625},
-                {TechType.WiringKit, 0.5625},
-                {TechType.PowerCell, 0.5},
-                {TechType.ComputerChip, 0.5},
-                {TechType.AdvancedWiringKit, 0.4375},
-                {TechType.ReactorRod, 0.015625},
+                {TechType.CopperWire, 1.0},
+                {TechType.Battery, 1.0},
+                {TechType.WiringKit, 1.0},
+                {TechType.PowerCell, 1.0},
+                {TechType.ComputerChip, 1.0},
+                {TechType.AdvancedWiringKit, 1.0},
+                {TechType.ReactorRod, 1.0},
                 {TechType.PrecursorIonBattery, 0},
                 {TechType.PrecursorIonPowerCell, 0},
             };
@@ -73,11 +73,9 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                         new
                         {
                             TechType = w.Key,
-                            Weight =
-                                (!cList.Any() ? (double?)null : cList.Min(c => c.Value))
-                                ?? w.Value
+                            Weight = (!cList.Any() ? 0.0 : cList.Min(c => c.Value))
                         })
-                .Where(a => a.TechType != TechType.None && a.Weight is > 0.0 and <= 1.0)
+                .Where(a => a.TechType != TechType.None && a.Weight is > 0.0 and <= 10.0)
                 .ToDictionary(a => a.TechType, a => a.Weight);
 
         private static IDictionary<TechType, double> ConfigWeights =>

@@ -22,9 +22,9 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
         public IDictionary<string, double> SalvageProbabilities =
             new Dictionary<string, double>
             {
-                {"PrecursorIonCrystal", 0.03125},
-                {"PrecursorIonBattery", 0.0078125},
-                {"PrecursorIonPowerCell", 0.00390625},
+                {"PrecursorIonCrystal", 0.125},
+                {"PrecursorIonBattery", 0.125},
+                {"PrecursorIonPowerCell", 0.125},
             };
 
     }
