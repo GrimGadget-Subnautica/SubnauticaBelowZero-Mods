@@ -11,7 +11,7 @@ namespace Grimolfr.SubnauticaZero
             TechType = ingredient.techType;
             Amount = ingredient.amount;
 
-            ComponentMaterials = new MaterialList(TechType.GetRecipe(), this);
+            MaterialList = new MaterialList(TechType.GetRecipe(), this);
         }
 
         private Material(Material source)
@@ -21,8 +21,10 @@ namespace Grimolfr.SubnauticaZero
             TechType = source.TechType;
             Amount = source.Amount;
 
-            ComponentMaterials = new MaterialList(source.ComponentMaterials.Select(s => new Material(s) {Parent = this}));
+            MaterialList = new MaterialList(source.MaterialList.Select(s => new Material(s) {Parent = this}));
         }
+
+        public int CountAllRawMaterials() => MaterialList.Count > 0 ? MaterialList.Sum(mat => mat.CountAllRawMaterials()) : Amount;
 
         public TechType TechType { get; }
 
@@ -30,7 +32,7 @@ namespace Grimolfr.SubnauticaZero
 
         public Material Parent { get; internal set; }
 
-        public MaterialList ComponentMaterials { get; set; }
+        public MaterialList MaterialList { get; set; }
 
         public Material Clone()
         {

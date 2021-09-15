@@ -11,21 +11,28 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
     internal class Configuration
         : ConfigFile
     {
+        [Toggle(Label = "Verbose Debug Logging", Tooltip = "Log extra data when QMods debug logging is enabled.", Order = 1)]
+        public bool EnableVerboseLogging = false;
+
         [Choice(
             Label = "Salvage Operation Mode",
             Tooltip = "Selects the operational mode of the salvage functionality.  "
                 + "'Any' will return any possible salvage result from the Basic or Advanced setting.  "
                 + "'Basic' will only return non-organic raw materials and basic materials."
-                + "'Advanced' will only return advanced resources and electronics, but with a possibility of receiving nothing at all.  ")]
+                + "'Advanced' will only return advanced resources and electronics, but with a possibility of receiving nothing at all.  ",
+            Order = 101)]
         public OperationMode OperationMode = OperationMode.Basic;
 
         public IDictionary<string, double> SalvageProbabilities =
             new Dictionary<string, double>
             {
+                {"Titanium", 2.0},
+
+                {"Battery", 1.25},
+
                 {"PrecursorIonCrystal", 0.125},
                 {"PrecursorIonBattery", 0.125},
                 {"PrecursorIonPowerCell", 0.125},
             };
-
     }
 }

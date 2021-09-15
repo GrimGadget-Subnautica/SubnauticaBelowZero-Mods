@@ -8,6 +8,8 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
         {
             TechType = material.TechType;
             Parent = parent;
+
+            Weight = 1.0 / material.CountAllRawMaterials();
         }
 
         [JsonIgnore]
@@ -15,6 +17,6 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
         public TechType TechType { get; }
 
-        public double Weight { get; set; } = 0.0;
+        public double Weight { get; set; }
     }
 }

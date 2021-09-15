@@ -46,7 +46,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                 {TechType.AramidFibers, 1.0},
                 {TechType.Benzene, 1.0},
                 {TechType.Polyaniline, 1.0},
-                {TechType.PrecursorIonCrystal, 0},
+                {TechType.PrecursorIonCrystal, 1.0},
             };
 
         private static readonly IDictionary<TechType, double> Electronics =
@@ -59,8 +59,8 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                 {TechType.ComputerChip, 1.0},
                 {TechType.AdvancedWiringKit, 1.0},
                 {TechType.ReactorRod, 1.0},
-                {TechType.PrecursorIonBattery, 0},
-                {TechType.PrecursorIonPowerCell, 0},
+                {TechType.PrecursorIonBattery, 1.0},
+                {TechType.PrecursorIonPowerCell, 1.0},
             };
 
         public static IDictionary<TechType, double> Weights =>
@@ -73,7 +73,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                         new
                         {
                             TechType = w.Key,
-                            Weight = (!cList.Any() ? 0.0 : cList.Min(c => c.Value))
+                            Weight = cList.Any() ? cList.Min(c => c.Value) : w.Value
                         })
                 .Where(a => a.TechType != TechType.None && a.Weight is > 0.0 and <= 10.0)
                 .ToDictionary(a => a.TechType, a => a.Weight);
@@ -81,7 +81,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
         private static IDictionary<TechType, double> ConfigWeights =>
             Main.Config.SalvageProbabilities
                 .Select(kvp => new {TechType = kvp.Key.ToEnum<TechType>(), Weight = kvp.Value})
-                .Where(a => a.TechType != null && a.TechType != TechType.None & a.Weight is > 0.0 and <= 1.0)
+                .Where(a => a.TechType != null && a.TechType != TechType.None && a.Weight is > 0.0 and <= 10.0)
                 .ToDictionary(a => a.TechType.Value, a => a.Weight);
 
         private static IEnumerable<KeyValuePair<TechType, double>> ConfiguredOperationModeSalvageTypes() =>
@@ -90,7 +90,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                 OperationMode.Any => Minerals.Concat(BasicMaterials).Concat(AdvancedMaterials).Concat(Electronics),
                 OperationMode.Basic => Minerals.Concat(BasicMaterials),
                 OperationMode.Advanced => AdvancedMaterials.Concat(Electronics),
-                _ => Minerals.Concat(BasicMaterials).Concat(AdvancedMaterials).Concat(Electronics)
+                _ => Minerals.Concat(BasicMaterials)
             };
     }
 }

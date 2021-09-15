@@ -24,7 +24,6 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             Main.Config.OperationMode
                 switch
                 {
-                    OperationMode.Basic => 2,
                     OperationMode.Advanced => 0,
                     OperationMode.Any => 1,
                     _ => 2
@@ -34,21 +33,21 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             Main.Config.OperationMode
                 switch
                 {
-                    OperationMode.Basic => Math.Max(_materialList.Count, MinSalvage),
                     OperationMode.Advanced => 2,
-                    OperationMode.Any => 3,
-                    _ => 2,
+                    _ => Math.Max(_materialList.Count, MinSalvage),
                 };
 
         public bool ReclaimSalvage()
         {
-            var salvage = SelectSalvage(new Random().Next(MinSalvage, Math.Max(MinSalvage, MaxSalvage) + 1)).ToList();
+            var salvageCount = new Random().Next(MinSalvage, Math.Max(MinSalvage, MaxSalvage) + 1);
+            Log.Debug($"Attempting to salvage {salvageCount} items {{Operation Mode: {Main.Config.OperationMode} ({MinSalvage} - {MaxSalvage})}}");
 
-            for (var i = 0; i < MinSalvage - salvage.Count; i++) salvage.Add(TechType.Titanium);
+            var salvage = SelectSalvage(salvageCount).ToList();
 
-            Log.Debug(
-                $"Salvaging: {Environment.NewLine}"
-                + $"{JArray.FromObject(salvage, Log.LoggingJsonSerializer).SerializeForLog()}");
+            while (salvage.Count < MinSalvage)
+                salvage.Add(TechType.Titanium);
+
+            Log.Debug($"Salvaging: {Environment.NewLine}{JArray.FromObject(salvage, Log.LoggingJsonSerializer).SerializeForLog()}");
 
             foreach (var techType in salvage)
                 CraftData.AddToInventory(techType);
@@ -72,7 +71,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
                 var si = new SalvageableItem(material, parent);
 
                 yield return si;
-                foreach (var child in BuildSalvageableItemList(material.ComponentMaterials, si))
+                foreach (var child in BuildSalvageableItemList(material.MaterialList, si))
                     yield return child;
             }
         }
@@ -92,7 +91,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             return null;
         }
 
-        private void DestructiveSalvage(SalvageableItem choice)
+        private void DestroySalvagedComponent(SalvageableItem choice)
         {
             if (choice == null) return;
 
@@ -101,7 +100,8 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
             var top = _materialList.First(m => m.TechType == choice.TechType);
 
-            Log.Debug($"Removing 1x {top.TechType} from salvageable materials list...");
+            if (Main.Config.EnableVerboseLogging)
+                Log.Debug($"Removing 1x {top.TechType} from salvageable materials list...");
 
             if (top.Amount > 1)
                 top.Amount--;
@@ -113,31 +113,35 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
         {
             for (var i = 0; i < salvageCount; i++)
             {
-                var salvageList =
-                    // Build list of possible salvage
+                // Build list of possible salvage
+                // Filter list to supported items and set weights
+                var salvageableItemList =
                     BuildSalvageableItemList(_materialList)
-                        // Filter list to supported items
                         .GroupJoin(Salvageable.Weights, si => si.TechType, sw => sw.Key, (item, weights) => new {Item = item, Weights = weights})
-                        // Set weights
-                        .Where(a => a.Weights.Any(kvp => kvp.Value is > 0.0 and <= 1.0))
+                        .Where(a => a.Weights.Any(kvp => kvp.Value is > 0.0 and <= 10.0))
                         .Select(
                             a =>
                             {
-                                a.Item.Weight = a.Weights.Min(w => w.Value);
+                                a.Item.Weight *= a.Weights.Where(kvp => kvp.Value is > 0.0 and <= 10.0).Min(w => w.Value);
                                 return a.Item;
                             })
                         .ToArray();
 
+                if (Main.Config.EnableVerboseLogging)
+                    Log.Debug(
+                        $"Salvageable Item List: {Environment.NewLine}"
+                        + JArray.FromObject(salvageableItemList, Log.LoggingJsonSerializer).SerializeForLog());
+
                 // Select a salvage item
-                var choice = SelectItem(salvageList);
+                var choice = SelectItem(salvageableItemList);
                 if (choice == null) yield break;
 
                 // Destroy salvage item in materials list
-                DestructiveSalvage(choice);
+                DestroySalvagedComponent(choice);
 
                 // return selected item's TechType
 
-                yield return salvageList.Select(s => s.TechType).Randomize().First();
+                yield return choice.TechType;
             }
         }
     }
