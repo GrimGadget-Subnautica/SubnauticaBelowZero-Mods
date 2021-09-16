@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Grimware;
 
@@ -80,9 +81,11 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
         private static IDictionary<TechType, double> ConfigWeights =>
             Main.Config.SalvageProbabilities
-                .Select(kvp => new {TechType = kvp.Key.ToEnum<TechType>(), Weight = kvp.Value})
-                .Where(a => a.TechType != null && a.TechType != TechType.None && a.Weight is > 0.0 and <= 10.0)
-                .ToDictionary(a => a.TechType.Value, a => a.Weight);
+                .GroupBy(
+                    x => x.Key,
+                    (tt, x) => new {TechType = tt.ToEnum<TechType>(true) ?? TechType.None, Weight = x.Min(w => w.Value)},
+                    StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(x => x.TechType, x => x.Weight);
 
         private static IEnumerable<KeyValuePair<TechType, double>> ConfiguredOperationModeSalvageTypes() =>
             Main.Config.OperationMode switch
