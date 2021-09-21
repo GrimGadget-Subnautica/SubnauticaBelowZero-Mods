@@ -12,7 +12,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
     [QModCore]
     public static class Main
     {
-        internal const string ModName = "Scanner ReclaimSalvage";
+        internal const string ModName = "Scanner Salvage";
 
         internal static Configuration Config { get; private set; }
 

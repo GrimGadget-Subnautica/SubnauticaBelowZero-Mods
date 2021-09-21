@@ -11,7 +11,7 @@ namespace Grimolfr.SubnauticaZero
         public static RecipeData GetRecipe(this TechType? techType) => techType == null ? null : GetRecipe(techType.Value);
 
         public static RecipeData GetRecipe(this TechType techType) =>
-            _TechRecipes.GetOrAdd(techType, tt => GetTechRecipe(techType) ?? GetScannerEntryRecipe(techType));
+            _TechRecipes.GetOrAdd(techType, tt => GetTechRecipe(tt) ?? GetScannerEntryRecipe(tt));
 
         private static RecipeData GetScannerEntryRecipe(TechType techType)
         {

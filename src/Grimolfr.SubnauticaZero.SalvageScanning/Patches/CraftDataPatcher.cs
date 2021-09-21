@@ -37,13 +37,12 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Patches
                 // Scanned a fragment
                 var scannedTech = PDAScanner.scanTarget.techType;
                 Log.Info($"Scanned {scannedTech}.");
+
                 if (scannedTech == TechType.None) return true;
 
-
                 // reclaim salvage from the fragment
-                var recipe = scannedTech.GetRecipe();
-                if (recipe == null) return true;
-                return !new SalvageTool(recipe).ReclaimSalvage();
+                var salvageTool = new SalvageTool(scannedTech);
+                return !salvageTool.ReclaimSalvage();
             }
 
             // If we made it here, we didn't do anything.  Move on to the next patch, if any.

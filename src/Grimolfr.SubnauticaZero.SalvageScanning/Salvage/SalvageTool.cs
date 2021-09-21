@@ -9,15 +9,18 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 {
     internal class SalvageTool
     {
+        private readonly TechType _techType;
+        private readonly RecipeData _recipe;
         private static readonly Random _Random = new Random();
 
         private readonly MaterialList _materialList;
 
-
-        public SalvageTool(RecipeData recipe)
+        public SalvageTool(TechType techType)
         {
-            if (recipe == null) throw new ArgumentNullException(nameof(recipe));
-            _materialList = new MaterialList(recipe);
+            _techType = techType;
+
+            _recipe = techType.GetRecipe();
+            _materialList = new MaterialList(_recipe);
         }
 
         private static int MinSalvage =>
@@ -39,6 +42,14 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
         public bool ReclaimSalvage()
         {
+            if (_techType == TechType.None || _recipe == null || _materialList == null || !_materialList.Any())
+                return false;
+
+            if (Main.Config.EnableVerboseLogging)
+                Log.Debug(
+                    $"Reclaiming salvage from {_techType}{Environment.NewLine}"
+                    + $"{JArray.FromObject(_materialList, Log.LoggingJsonSerializer).SerializeForLog()}");
+
             var salvageCount = new Random().Next(MinSalvage, Math.Max(MinSalvage, MaxSalvage) + 1);
             Log.Debug($"Attempting to salvage {salvageCount} items {{Operation Mode: {Main.Config.OperationMode} ({MinSalvage} - {MaxSalvage})}}");
 
