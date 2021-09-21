@@ -19,8 +19,6 @@ namespace Grimolfr.SubnauticaZero.ExteriorPlantPots
         {
             Log.Info($"Registering {ModName} configuration...");
             Config = OptionsPanelHandler.Main.RegisterModOptions<Configuration>();
-            if (!File.Exists(Config.JsonFilePath))
-                Config.Save();
 
             Log.Info($"Registering {ModName} prefabs...");
             new ExteriorPlantPotPrefab().Patch();

@@ -26,8 +26,6 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
         {
             Log.Info($"Registering {ModName} configuration...");
             Config = OptionsPanelHandler.Main.RegisterModOptions<Configuration>();
-            if (!File.Exists(Config.JsonFilePath))
-                Config.Save();
 
             var assembly = Assembly.GetExecutingAssembly();
             var assemblyName = assembly.GetName().Name;
