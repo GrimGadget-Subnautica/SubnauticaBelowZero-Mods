@@ -43,8 +43,8 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
             new Dictionary<TechType, double>
             {
                 {TechType.Aerogel, 1.0},
-                {TechType.HydrochloricAcid, 1.0},
                 {TechType.AramidFibers, 1.0},
+                {TechType.HydrochloricAcid, 1.0},
                 {TechType.Benzene, 1.0},
                 {TechType.Polyaniline, 1.0},
                 {TechType.PrecursorIonCrystal, 1.0},

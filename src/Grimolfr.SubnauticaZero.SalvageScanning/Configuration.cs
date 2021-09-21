@@ -18,18 +18,25 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
             Label = "Salvage Operation Mode",
             Tooltip = "Selects the operational mode of the salvage functionality.  "
                 + "'Any' will return any possible salvage result from the Basic or Advanced setting.  "
-                + "'Basic' will only return non-organic raw materials and basic materials."
-                + "'Advanced' will only return advanced resources and electronics, but with a possibility of receiving nothing at all.  ",
+                + "'Basic' will only return non-biological raw materials and basic materials."
+                + "'Advanced' will only return advanced resources and electronics, with a possibility of receiving nothing at all.  ",
             Order = 101)]
-        public OperationMode OperationMode = OperationMode.Basic;
+        public OperationMode OperationMode = OperationMode.Any;
 
-        public IDictionary<string, double> SalvageProbabilities =
+        public readonly IDictionary<string, double> SalvageProbabilities =
             new Dictionary<string, double>
             {
                 {"titanium", 2.5},
-                {"PrecursorIonCrystal", 0.125},
-                {"PrecursorIonBattery", 0.125},
-                {"PrecursorIonPowerCell", 0.125},
+                {"copper", 0.5},
+
+                {"Lubricant", 0.125},
+                {"HydrochloricAcid", 0.125},
+                {"Benzene", 0.125},
+                {"Polyaniline", 0.125},
+
+                {"PrecursorIonCrystal", 0.0625},
+                {"PrecursorIonBattery", 0},
+                {"PrecursorIonPowerCell", 0},
             };
     }
 }

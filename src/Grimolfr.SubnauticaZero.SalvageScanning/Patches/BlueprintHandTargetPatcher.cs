@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System.Reflection;
+using HarmonyLib;
 
 namespace Grimolfr.SubnauticaZero.SalvageScanning.Patches
 {
@@ -12,6 +13,9 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Patches
         public static bool PreUnlockBlueprint(BlueprintHandTarget __instance)
         {
             DataBoxTechType = __instance.unlockTechType;
+
+            if (Main.Config.EnableVerboseLogging)
+                Log.Debug($"{MethodBase.GetCurrentMethod().Name} TechType: {DataBoxTechType}");
 
             return true;
         }
