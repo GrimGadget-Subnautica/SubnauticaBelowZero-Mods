@@ -81,10 +81,11 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
         private static IDictionary<TechType, double> ConfigWeights =>
             Main.Config.SalvageProbabilities
+                .Where(kvp => kvp.Value is >= 0.0 and <= 10.0)
                 .GroupBy(
                     x => x.Key,
-                    (tt, x) => new {TechType = tt.ToEnum<TechType>(true) ?? TechType.None, Weight = x.Min(w => w.Value)},
-                    StringComparer.OrdinalIgnoreCase)
+                    (tt, x) =>
+                        new {TechType = tt.ToEnum<TechType>(true) ?? TechType.None, Weight = x.Min(w => w.Value)}, StringComparer.OrdinalIgnoreCase)
                 .ToDictionary(x => x.TechType, x => x.Weight);
 
         private static IEnumerable<KeyValuePair<TechType, double>> ConfiguredOperationModeSalvageTypes() =>
