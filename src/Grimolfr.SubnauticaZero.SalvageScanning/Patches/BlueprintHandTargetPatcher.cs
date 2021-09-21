@@ -14,8 +14,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Patches
         {
             DataBoxTechType = __instance.unlockTechType;
 
-            if (Main.Config.EnableVerboseLogging)
-                Log.Debug($"{MethodBase.GetCurrentMethod().Name} TechType: {DataBoxTechType}");
+            Log.Debug($"{MethodBase.GetCurrentMethod().Name} TechType: {DataBoxTechType}");
 
             return true;
         }

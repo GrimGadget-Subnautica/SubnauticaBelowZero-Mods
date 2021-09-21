@@ -24,7 +24,7 @@ namespace Grimolfr.SubnauticaZero
             MaterialList = new MaterialList(source.MaterialList.Select(s => new Material(s) {Parent = this}));
         }
 
-        public int CountAllRawMaterials() => MaterialList.Count > 0 ? MaterialList.Sum(mat => mat.CountAllRawMaterials()) : Amount;
+        public int CountAllRawMaterials() => MaterialList.Count > 0 ? MaterialList.Sum(mat => mat.CountAllRawMaterials()) : 1;
 
         public TechType TechType { get; }
 
