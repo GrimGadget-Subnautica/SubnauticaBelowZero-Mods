@@ -11,8 +11,14 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
     internal class Configuration
         : ConfigFile
     {
-        [Toggle(Label = "Verbose Debug Logging", Tooltip = "Log extra data when QMods debug logging is enabled.", Order = 1)]
+        [Toggle(Label = "Verbose Debug Logging", Tooltip = "When enabled, log extra data when QMods debug logging is also enabled.", Order = 1)]
         public bool EnableVerboseLogging = false;
+
+        [Toggle(
+            Label = "Extra Titanium",
+            Tooltip = "When enabled, salvage 1 extra titanium if titanium is a component of the blueprint recipe.",
+            Order = 100)]
+        public bool ExtraTitanium = false;
 
         [Choice(
             Label = "Salvage Operation Mode",
@@ -20,7 +26,7 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning
                 + "'Any' will return any possible salvage result from the Basic or Advanced setting.  "
                 + "'Basic' will only return non-biological raw materials and basic materials."
                 + "'Advanced' will only return advanced resources and electronics, with a possibility of receiving nothing at all.  ",
-            Order = 101)]
+            Order = 200)]
         public OperationMode OperationMode = OperationMode.Any;
 
         public readonly IDictionary<string, double> SalvageProbabilities =

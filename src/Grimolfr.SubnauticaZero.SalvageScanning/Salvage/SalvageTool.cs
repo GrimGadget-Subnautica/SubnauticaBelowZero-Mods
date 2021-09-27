@@ -122,6 +122,12 @@ namespace Grimolfr.SubnauticaZero.SalvageScanning.Salvage
 
         private IEnumerable<TechType> SelectSalvage(int salvageCount)
         {
+            if (Main.Config.ExtraTitanium && BuildSalvageableItemList(_materialList).Any(s => s.TechType == TechType.Titanium))
+            {
+                Log.Debug($"Adding 1 extra titanium to salvage...");
+                yield return TechType.Titanium;
+            }
+
             for (var i = 0; i < salvageCount; i++)
             {
                 // Build list of possible salvage
